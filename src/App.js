@@ -5,8 +5,8 @@ import PersonalInfo from './screens/PersonalInfoScreen/PersonalInfo'
 function App() {
   return (
       // <SignupScreen/>
-      <LoginScreen/>
-      // <PersonalInfo/>
+      // <LoginScreen/>
+      <PersonalInfo/>
   );
 }
 

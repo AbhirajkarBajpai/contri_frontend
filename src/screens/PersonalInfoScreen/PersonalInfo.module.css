@@ -1,75 +1,68 @@
 .container {
-    display: flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5vw;
+  height: 100vh;
+  background-color: #0a122a;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.profileSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.profilePicture {
+  background-color: #ffffff;
+  border-radius: 50%;
+  width: 15rem;
+  height: 15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+.menSvgPI {
+  position: relative;
+  top: 10%;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.infoGrid {
+  display: flex;
+  align-items: left;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-weight: bold;
+  color: #0078ff;
+}
+
+@media (max-width:650px) {
+  .container{
     flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    background-color: #0a122a; 
-    color: white;
-    font-family: Arial, sans-serif;
   }
-  
-  .profileSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 2rem;
+  .profilePicture{
+    width: 20vh;
+    height: 20vh;
   }
-  
-  .profilePicture {
-    background-color: #0078ff;
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-  
-  .avatar {
-    width: 100px;
-    height: 100px;
-    background-color: white;
-    border-radius: 50%;
-  }
-  
-  
-  /* Info Section */
-  .infoSection {
-    width: 100%;
-    max-width: 600px;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-  
-  .infoGrid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-  
-  .infoItem {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .label {
-    font-weight: bold;
-    color: #0078ff;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .infoGrid {
-      grid-template-columns: 1fr;
-    }
-  
-    .profilePicture {
-      width: 120px;
-      height: 120px;
-    }
-  }
-  
+}
+
