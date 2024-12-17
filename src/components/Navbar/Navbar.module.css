@@ -1,0 +1,87 @@
+.navbar {
+  background-color: #000d1a;
+  height: 5vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  padding-right: 10vw;
+  padding-top: 10vw;
+}
+
+.burger {
+  display: none; 
+  cursor: pointer;
+}
+
+.line {
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  margin: 5px 0;
+  transition: all 0.3s ease;
+}
+
+.navLinks {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.navItem {
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  position: relative;
+  cursor: pointer;
+  padding-bottom: 5px;
+  transition: color 0.3s ease;
+}
+
+.navItem:hover {
+  color: #4090f0;
+}
+
+.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #4090f0;
+}
+
+/* Responsive Design for Mobile */
+@media screen and (max-width: 600px) {
+  /* Burger Menu Visible */
+  .burger {
+    display: block;
+  }
+
+  /* Hide Nav Links by default */
+  .navLinks {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    background-color: #000d1a;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    opacity: 0;
+  }
+
+  /* Show Nav Links when burger is clicked */
+  .navLinksMobile {
+    height: auto;
+    opacity: 1;
+    padding: 20px 0;
+  }
+}
