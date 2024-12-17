@@ -1,0 +1,149 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.loginPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #0a122a;
+    gap: 5vw;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+  }
+  
+  .leftSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .login_svg1{
+    height: 45vh;
+  }
+  
+  .laptopMockup {
+    width: 300px;
+    height: 200px;
+    background-color: #141a32;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .lockIcon {
+    position: absolute;
+    top: 20%;
+    left: 90%;
+    transform: translate(-45%,-50%);
+    background-color: #0078ff;
+    color: white;
+    font-size: 40px;
+    height: 80px;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+  }
+  
+  /* Right Section */
+  .rightSection {
+    text-align: left;
+    /* max-width: 400px; */
+  }
+  
+  .loginTitle {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+  }
+  
+  .loginForm {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .loginForm label{
+    margin-bottom: .5rem;
+  }
+  
+  .input {
+    padding: 0.7rem;
+    margin-bottom: 1rem;
+    width: 20rem;
+    height: 1rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  .options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  
+  .link {
+    text-decoration: none;
+    color: #0078ff;
+    font-size: 0.9rem;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  }
+  
+  .loginButton {
+    background-color: #0078ff;
+    color: white;
+    border: none;
+    width: 10rem;
+    height: 2.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .loginButton:hover {
+    background-color: #005bb5;
+  }
+
+  @media (min-width:700px) and (max-width:900px) {
+    .login_svg1{
+     height: 15rem; 
+    }
+    .lockIcon {
+      height: 3rem;
+      width: 3rem;
+    }
+  }
+
+  @media (max-width:700px){
+    .loginPage{
+      flex-direction: column ;
+    }
+    .login_svg1{
+      height: 25vh; 
+     }
+     .loginTitle{
+      text-align: center;
+     }
+     .input{
+      width: 80vw;
+    height: 2vh;
+     }
+     .loginButton{
+      width: 19vh;
+      height: 5vh;
+     }
+  }
+  
