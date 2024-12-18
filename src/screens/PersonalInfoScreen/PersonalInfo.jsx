@@ -70,6 +70,9 @@ const PersonalInfo = () => {
             <span className={styles.label}>Email:</span> john.doe@gmail.com
           </div>
           <div className={styles.infoItem}>
+            <span className={styles.label}>Contact No:</span> 9845826173
+          </div>
+          <div className={styles.infoItem}>
             <span className={styles.label}>UPI ID:</span> john.doe@upi
           </div>
         </div>

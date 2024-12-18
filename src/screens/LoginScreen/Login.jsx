@@ -80,9 +80,9 @@ const LoginScreen = () => {
       <div className={styles.rightSection}>
         <h1 className={styles.loginTitle}>Login</h1>
         <form className={styles.loginForm}>
-          <label>Email</label>
-          <input type="email" placeholder="Email" className={styles.input} />
-          <label>Password</label>
+          <label>Email/Contact No:</label>
+          <input type="email" placeholder="Email or Contact No" className={styles.input} />
+          <label>Password:</label>
           <input
             type="password"
             placeholder="Password"
@@ -90,7 +90,7 @@ const LoginScreen = () => {
           />
           <div className={styles.options}>
             {/* <a href="#" className={styles.link}>Forgot Password?</a> */}
-            <a href="#" className={styles.link}>
+            <a href="/signup" className={styles.link}>
               Not registered yet? Register now!
             </a>
           </div>

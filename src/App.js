@@ -3,14 +3,19 @@ import SignupScreen from "./screens/SignupScreen/Signup";
 import LoginScreen from "./screens/LoginScreen/Login";
 import Main from "./mainPage";
 import { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import React from "react";
 function App() {
-  const [islogin, setIsLogin] = useState(true);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   return (
     <>
       <Routes>
-        <Route path="/" element={ <Main />} />
+        <Route
+          path="/"
+          element={isUserLoggedIn ? <Main /> : <Navigate to="/login" />}
+        />
+        <Route path="/signup" element={<SignupScreen />} />
+        <Route path="/login" element={<LoginScreen />} />
       </Routes>
     </>
   );

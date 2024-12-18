@@ -38,11 +38,13 @@ const SignupScreen = () => {
 
           <label>Email</label>
           <input type="email" placeholder="Enter your email" required />
+          <label>Contact No</label>
+          <input type="email" placeholder="Enter your Contact Number" required />
 
           <label>Password</label>
           <input type="password" placeholder="Enter your password" required />
-{/* 
-          <label>UPI ID (optional)</label>
+
+          {/* <label>UPI ID (optional)</label>
           <input type="text" placeholder="Enter your UPI ID" /> */}
 
           <button type="submit">Submit</button>
