@@ -10,15 +10,14 @@ function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
   return (
     <>
-      {/* <Routes>
+      <Routes>
         <Route
           path="/"
           element={isUserLoggedIn ? <Main /> : <Navigate to="/login" />}
         />
         <Route path="/signup" element={<SignupScreen />} />
         <Route path="/login" element={<LoginScreen />} />
-      </Routes> */}
-      <CreateGroup/>
+      </Routes>
     </>
   );
 }
