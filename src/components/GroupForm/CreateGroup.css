@@ -1,0 +1,120 @@
+.group-form {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    margin: 15vh auto;
+    background: #0a122a;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-control {
+    margin-bottom: 2vh;
+}
+
+.form-control label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #d3cfcf;
+}
+
+.form-control input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.add-member-btn {
+    margin-top: 10px;
+    background-color: #1a51a3;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-member-btn:hover {
+    background-color: #0056b3;
+}
+
+.members-list h4 {
+    margin: 0 0 2vh;
+    color: #444;
+    font-size: 18px;
+}
+
+.member-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-bottom: 2vh;
+    font-size: 14px;
+}
+
+.remove-member-btn {
+    background-color: #b62929;
+    color: white;
+    border: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.remove-member-btn:hover {
+    background-color: #cc0000;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cancel-btn {
+    background-color: #7f2f29;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5vh;
+    border-radius: .7vh;
+    cursor: pointer;
+}
+
+.cancel-btn:hover {
+    background-color: #c23625;
+}
+
+.submit-btn {
+    background-color: #3db741;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5vh;
+    border-radius: .7vh;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #378b36;
+}
+
+@media (max-width:600px) {
+    .group-form{
+        width: 80vw;
+    }    
+}
