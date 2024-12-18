@@ -3,8 +3,9 @@
   align-items: center;
   justify-content: center;
   gap: 5vw;
-  height: 100vh;
-  background-color: #0a122a;
+  height: 90vh;
+  background-color: #000d1a;
+  /* background-color: #0a122a; */
   color: white;
   font-family: Arial, sans-serif;
 }

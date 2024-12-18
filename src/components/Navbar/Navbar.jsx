@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Navbar.module.css";
 
-function Navbar() {
-  const [active, setActive] = useState("Personal Info");
+function Navbar({active, setActive}) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -34,10 +33,10 @@ function Navbar() {
         </li>
         <li
           className={`${styles.navItem} ${
-            active === "Contact" ? styles.active : ""
+            active === "YourGroups" ? styles.active : ""
           }`}
           onClick={() => {
-            setActive("Contact");
+            setActive("YourGroups");
             setMenuOpen(false);
           }}
         >
