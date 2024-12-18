@@ -1,12 +1,13 @@
 .navbar {
   background-color: #000d1a;
-  height: 5vh;
+  height: 8vh;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   position: relative;
   padding-right: 10vw;
-  padding-top: 10vw;
+  padding-top: 4vh;
+  padding-bottom: 2vh;
 }
 
 .burger {
