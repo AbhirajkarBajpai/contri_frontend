@@ -1,12 +1,3 @@
-.backdrop{
-    height: 100vh;
-    width: 100vw;
-    position: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #2b2424;
-}
 .group-form {
     display: flex;
     flex-direction: column;

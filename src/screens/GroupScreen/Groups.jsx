@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Groups.module.css";
 import CreateGroup from "../../components/GroupForm/CreateGroup";
+import Modal from "../../components/Modal/Modal";
 
 const Groups = ({ groups }) => {
   const [isCreating, setIsCreating] = useState(false);
@@ -8,12 +9,14 @@ const Groups = ({ groups }) => {
   return (
     <div className={styles.container}>
       {isCreating && (
-          <CreateGroup/>
+        <Modal>
+          <CreateGroup onCancel={()=>setIsCreating(false)} />
+        </Modal>
       )}
       <header className={styles.header}>
         <h1 className={styles.title}>Groups</h1>
         <svg
-        onClick={()=>setIsCreating(true)}
+          onClick={() => setIsCreating(true)}
           className={styles.addbutton}
           viewBox="0 0 24 24"
           fill="none"

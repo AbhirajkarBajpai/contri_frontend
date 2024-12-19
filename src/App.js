@@ -5,7 +5,6 @@ import Main from "./mainPage";
 import { useState } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import React from "react";
-import CreateGroup from "./components/GroupForm/CreateGroup";
 function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
   return (

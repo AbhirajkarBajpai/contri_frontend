@@ -62,7 +62,7 @@ function CreateGroup(props) {
   }
 
   return (
-    <div className="backdrop">
+    // <div className="backdrop">
       <form onSubmit={submitHandler} className="group-form">
         <div className="form-control">
           <label>Group Name:</label>
@@ -120,7 +120,7 @@ function CreateGroup(props) {
           </button>
         </div>
       </form>
-    </div>
+    // </div>
   );
 }
 
