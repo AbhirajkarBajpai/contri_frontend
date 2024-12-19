@@ -95,11 +95,12 @@ function CreateGroup(props) {
         </div>
 
         <div className="members-list">
-          <h4>Members List:</h4>
+          <h4>Members Added:</h4>
           <ul>
-            {members.map((member, index) => (
+            {members.length===0?<span className="noMemberState">No memebers Added Yet!</span>:
+            members.map((member, index) => (
               <li key={index} className="member-item">
-                {member.name} - {member.phone}{" "}
+                {member.name} : {member.phone}{" "}
                 <button
                   className="remove-member-btn"
                   onClick={() => removeMemberHandler(index)}

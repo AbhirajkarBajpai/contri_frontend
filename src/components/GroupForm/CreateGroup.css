@@ -48,6 +48,10 @@
     color: #444;
     font-size: 18px;
 }
+.noMemberState{
+    color: #fff;
+    margin-bottom:14px;
+}
 
 .member-item {
     display: flex;
