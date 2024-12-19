@@ -1,7 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Signup.css";
 
 const SignupScreen = () => {
+  const [enteredName, setEnteredName] = useState('');
+  const [enteredEmail, setEnteredEmail] = useState('');
+  const [enteredPhoneNo, setEnteredPhoneNo] = useState('');
+  const [enteredPassword, setEnteredPassword] = useState('');
+
+  const submitSignupFormHandler = async (e) => {
+    e.preventDefault();
+    if(enteredPassword.length<8){
+      alert("password can't be less than 8 characters!"); 
+      return;
+    }
+    const userData = {
+      name: enteredName,
+      email: enteredEmail,
+      phoneNo: enteredPhoneNo,
+      password: enteredPassword,
+    };
+  
+    try {
+      const response = await fetch("http://localhost:5000/api/v1/user/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Signup successful:", data);
+      } else {
+        const errorData = await response.json();
+        console.error("Signup failed:", errorData);
+      }
+    } catch (error) {
+      console.error("Error occurred during signup:", error);
+    }
+    setEnteredEmail('');
+    setEnteredName('');
+    setEnteredPassword('');
+    setEnteredPhoneNo('');
+  };
+
   return (
     <div className="signup-container">
       <div className="signup-illustration">
@@ -32,17 +75,17 @@ const SignupScreen = () => {
       </div>
       <div className="signup-form">
         <h2>Registration Form</h2>
-        <form>
+        <form onSubmit={submitSignupFormHandler}>
           <label>Name</label>
-          <input type="text" placeholder="Enter your name" required />
+          <input type="text" placeholder="Enter your name" value={enteredName} onChange={(e)=>setEnteredName(e.target.value)} required />
 
           <label>Email</label>
-          <input type="email" placeholder="Enter your email" required />
+          <input type="email" placeholder="Enter your email" value={enteredEmail} onChange={(e)=>setEnteredEmail(e.target.value)} required />
           <label>Contact No</label>
-          <input type="email" placeholder="Enter your Contact Number" required />
+          <input type="tel" placeholder="Enter your Contact Number" value={enteredPhoneNo} onChange={(e)=>setEnteredPhoneNo(e.target.value)} required />
 
           <label>Password</label>
-          <input type="password" placeholder="Enter your password" required />
+          <input type="password" placeholder="Enter your password" value={enteredPassword} onChange={(e)=>setEnteredPassword(e.target.value)} required />
 
           {/* <label>UPI ID (optional)</label>
           <input type="text" placeholder="Enter your UPI ID" /> */}

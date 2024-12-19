@@ -2,11 +2,14 @@ import "./App.css";
 import SignupScreen from "./screens/SignupScreen/Signup";
 import LoginScreen from "./screens/LoginScreen/Login";
 import Main from "./mainPage";
+import React from "react";
 import { useState } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import React from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from './store/store';
+
 function App() {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
+  const isUserLoggedIn = useSelector((state) => state.loggedInUser.value);
   return (
     <>
       <Routes>
