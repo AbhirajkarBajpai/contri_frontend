@@ -5,7 +5,7 @@ import Main from "./mainPage";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Route, Routes, Navigate,  useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "./store/store";
+import { setUser, setDetails } from "./store/store";
 
 function App() {
   const isUserLoggedIn = useSelector((state) => state.loggedInUser.value);
@@ -23,6 +23,8 @@ function App() {
         const data = await response.json();
         if (response.status === 200) {
           dispatch(setUser(data.userId));
+          dispatch(setDetails(data.user))
+          console.log(data);
         }
         if (response.status === 400) {
           setIsLoadingUser(false);
@@ -33,7 +35,7 @@ function App() {
     };
     verifyUser();
   }, []);
-  
+
   useEffect(() => {
     if (isUserLoggedIn) {
       setIsLoadingUser(false);

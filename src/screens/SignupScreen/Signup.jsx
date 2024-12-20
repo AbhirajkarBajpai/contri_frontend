@@ -44,6 +44,7 @@ const SignupScreen = () => {
         }, 100);
       } else {
         const errorData = await response.json();
+        alert(errorData.message);
         console.error("Signup failed:", errorData);
       }
     } catch (error) {

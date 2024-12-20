@@ -1,7 +1,13 @@
 import React from "react";
 import styles from "./PersonalInfo.module.css";
+import { useSelector } from "react-redux";
 
 const PersonalInfo = () => {
+  console.log()
+  const userName = useSelector((state) => state.userDetail.name);
+  const userEmail = useSelector((state) => state.userDetail.email);
+  const userPhoneNo = useSelector((state) => state.userDetail.PhoneNo);
+  const userUPI = useSelector((state) => state.userDetail.UpiId);
   return (
     <div className={styles.container}>
       <div className={styles.profileSection}>
@@ -64,16 +70,16 @@ const PersonalInfo = () => {
       <div className={styles.infoSection}>
         <div className={styles.infoGrid}>
           <div className={styles.infoItem}>
-            <span className={styles.label}>Name:</span> John Doe
+            <span className={styles.label}>Name:</span> {userName}
           </div>
           <div className={styles.infoItem}>
-            <span className={styles.label}>Email:</span> john.doe@gmail.com
+            <span className={styles.label}>Email:</span> {userEmail}
           </div>
           <div className={styles.infoItem}>
-            <span className={styles.label}>Contact No:</span> 9845826173
+            <span className={styles.label}>Contact No:</span> {userPhoneNo}
           </div>
           <div className={styles.infoItem}>
-            <span className={styles.label}>UPI ID:</span> john.doe@upi
+            <span className={styles.label}>UPI ID:</span> {userUPI===null?'Not Set':userUPI}
           </div>
         </div>
       </div>

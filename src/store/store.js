@@ -14,32 +14,33 @@ const UserSlice = createSlice({
   },
 });
 
-// Second Slice: Todos
-// const todoSlice = createSlice({
-//   name: 'todos',
-//   initialState: [],
-//   reducers: {
-//     addTodo: (state, action) => {
-//       state.push({ id: Date.now(), text: action.payload, completed: false });
-//     },
-//     toggleTodo: (state, action) => {
-//       const todo = state.find((t) => t.id === action.payload);
-//       if (todo) {
-//         todo.completed = !todo.completed;
-//       }
-//     },
-//   },
-// });
+const UserDetailsSlice = createSlice({
+  name: 'userDetails',
+  initialState: {
+    name:null,
+    email:null,
+    PhoneNo:null,
+    UpiId:null,
+  },
+  reducers: {
+    setDetails: (state, action) => {
+      state.name = action.payload.name;
+      state.email = action.payload.email;
+      state.PhoneNo = action.payload.phoneNo;
+      state.UpiId = action?.payload?.UpiId || null;
+    },
+  },
+});
 
 // Export actions from slices
 export const { setUser, removeUser } = UserSlice.actions;
-// export const { addTodo, toggleTodo } = todoSlice.actions;
+export const { setDetails } = UserDetailsSlice.actions;
 
-// Configure store with reducers from both slices
+// Configure store with reducers from slices
 const store = configureStore({
   reducer: {
     loggedInUser: UserSlice.reducer,
-    // todos: todoSlice.reducer,
+    userDetail: UserDetailsSlice.reducer,
   },
 });
 
