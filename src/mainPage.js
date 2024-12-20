@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar/Navbar";
 import Groups from "./screens/GroupScreen/Groups";
 
 const Main = () => {
-  const [array, setarray] = useState([]);
   const [active, setActive] = useState("Your Groups");
   return (
     <>
@@ -12,7 +11,7 @@ const Main = () => {
       {active === "Personal Info" ? (
         <PersonalInfo />
       ) : (
-        <Groups groups={array} />
+        <Groups/>
       )}
     </>
   );

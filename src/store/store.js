@@ -1,7 +1,5 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
-
-
-const UserSlice = createSlice({
+const userSlice = createSlice({
   name: 'loggedInUser',
   initialState: { value: null },
   reducers: {
@@ -14,7 +12,7 @@ const UserSlice = createSlice({
   },
 });
 
-const UserDetailsSlice = createSlice({
+const userDetailsSlice = createSlice({
   name: 'userDetails',
   initialState: {
     name:null,
@@ -32,15 +30,43 @@ const UserDetailsSlice = createSlice({
   },
 });
 
+const userGroupsSlice = createSlice({
+  name: 'userGroups',
+  initialState: {
+    groups: [], 
+  },
+  reducers: {
+    setGroups: (state, action) => {
+      state.groups = action.payload;
+    },
+    addGroup: (state, action) => {
+      state.groups.push(action.payload);
+    },
+    // remove a group by its ID
+    removeGroup: (state, action) => {
+      state.groups = state.groups.filter(group => group.id !== action.payload);
+    },
+    // update a group by its ID
+    updateGroup: (state, action) => {
+      const index = state.groups.findIndex(group => group.id === action.payload.id);
+      if (index !== -1) {
+        state.groups[index] = { ...state.groups[index], ...action.payload.updates };
+      }
+    },
+  },
+});
+
 // Export actions from slices
-export const { setUser, removeUser } = UserSlice.actions;
-export const { setDetails } = UserDetailsSlice.actions;
+export const { setUser, removeUser } = userSlice.actions;
+export const { setDetails } = userDetailsSlice.actions;
+export const { setGroups, addGroup, removeGroup, updateGroup } = userGroupsSlice.actions;
 
 // Configure store with reducers from slices
 const store = configureStore({
   reducer: {
-    loggedInUser: UserSlice.reducer,
-    userDetail: UserDetailsSlice.reducer,
+    loggedInUser: userSlice.reducer,
+    userDetail: userDetailsSlice.reducer,
+    userGroups: userGroupsSlice.reducer,
   },
 });
 

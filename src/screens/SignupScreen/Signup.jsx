@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import "./Signup.css";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setUser } from "../../store/store";
+import { setUser, setDetails, setGroups } from "../../store/store";
 
 const SignupScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [enteredName, setEnteredName] = useState('');
-  const [enteredEmail, setEnteredEmail] = useState('');
-  const [enteredPhoneNo, setEnteredPhoneNo] = useState('');
-  const [enteredPassword, setEnteredPassword] = useState('');
+  const [enteredName, setEnteredName] = useState("");
+  const [enteredEmail, setEnteredEmail] = useState("");
+  const [enteredPhoneNo, setEnteredPhoneNo] = useState("");
+  const [enteredPassword, setEnteredPassword] = useState("");
 
   const submitSignupFormHandler = async (e) => {
     e.preventDefault();
-    if(enteredPassword.length<8){
-      alert("password can't be less than 8 characters!"); 
+    if (enteredPassword.length < 8) {
+      alert("password can't be less than 8 characters!");
       return;
     }
     const userData = {
@@ -24,7 +24,7 @@ const SignupScreen = () => {
       phoneNo: enteredPhoneNo,
       password: enteredPassword,
     };
-  
+
     try {
       const response = await fetch("http://localhost:5000/api/v1/user/signup", {
         method: "POST",
@@ -34,11 +34,13 @@ const SignupScreen = () => {
         body: JSON.stringify(userData),
         credentials: "include",
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         console.log("Signup successful:", data);
         dispatch(setUser(data.data.user._id));
+        dispatch(setGroups(data.data.user.groups));
+        dispatch(setDetails(data.data.user));
         setTimeout(() => {
           navigate("/");
         }, 100);
@@ -50,10 +52,10 @@ const SignupScreen = () => {
     } catch (error) {
       console.error("Error occurred during signup:", error);
     }
-    setEnteredEmail('');
-    setEnteredName('');
-    setEnteredPassword('');
-    setEnteredPhoneNo('');
+    setEnteredEmail("");
+    setEnteredName("");
+    setEnteredPassword("");
+    setEnteredPhoneNo("");
   };
 
   return (
@@ -88,15 +90,39 @@ const SignupScreen = () => {
         <h2>Registration Form</h2>
         <form onSubmit={submitSignupFormHandler}>
           <label>Name</label>
-          <input type="text" placeholder="Enter your name" value={enteredName} onChange={(e)=>setEnteredName(e.target.value)} required />
+          <input
+            type="text"
+            placeholder="Enter your name"
+            value={enteredName}
+            onChange={(e) => setEnteredName(e.target.value)}
+            required
+          />
 
           <label>Email</label>
-          <input type="email" placeholder="Enter your email" value={enteredEmail} onChange={(e)=>setEnteredEmail(e.target.value)} required />
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={enteredEmail}
+            onChange={(e) => setEnteredEmail(e.target.value)}
+            required
+          />
           <label>Contact No</label>
-          <input type="tel" placeholder="Enter your Contact Number" value={enteredPhoneNo} onChange={(e)=>setEnteredPhoneNo(e.target.value)} required />
+          <input
+            type="tel"
+            placeholder="Enter your Contact Number"
+            value={enteredPhoneNo}
+            onChange={(e) => setEnteredPhoneNo(e.target.value)}
+            required
+          />
 
           <label>Password</label>
-          <input type="password" placeholder="Enter your password" value={enteredPassword} onChange={(e)=>setEnteredPassword(e.target.value)} required />
+          <input
+            type="password"
+            placeholder="Enter your password"
+            value={enteredPassword}
+            onChange={(e) => setEnteredPassword(e.target.value)}
+            required
+          />
 
           {/* <label>UPI ID (optional)</label>
           <input type="text" placeholder="Enter your UPI ID" /> */}

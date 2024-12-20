@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import styles from "./Groups.module.css";
 import CreateGroup from "../../components/GroupForm/CreateGroup";
 import Modal from "../../components/Modal/Modal";
+import { useSelector } from "react-redux";
 
-const Groups = ({ groups }) => {
+const Groups = () => {
   const [isCreating, setIsCreating] = useState(false);
-  console.log(groups);
+  const  userGroups = useSelector((state) => state.userGroups.groups);
   return (
     <div className={styles.container}>
       {isCreating && (
@@ -39,11 +40,11 @@ const Groups = ({ groups }) => {
           </g>
         </svg>
       </header>
-      {groups.length === 0 ? (
+      {userGroups.length === 0 ? (
         <p className={styles.noGroups}>No Groups Found</p>
       ) : (
         <ul className={styles.groupList}>
-          {groups.map((group, index) => (
+          {userGroups.map((group, index) => (
             <li key={index} className={styles.groupItem}>
               <div>
                 <h3 className={styles.groupName}>{group.name}</h3>

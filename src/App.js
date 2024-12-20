@@ -3,9 +3,9 @@ import SignupScreen from "./screens/SignupScreen/Signup";
 import LoginScreen from "./screens/LoginScreen/Login";
 import Main from "./mainPage";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Route, Routes, Navigate,  useNavigate } from "react-router-dom";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser, setDetails } from "./store/store";
+import { setUser, setDetails, setGroups } from "./store/store";
 
 function App() {
   const isUserLoggedIn = useSelector((state) => state.loggedInUser.value);
@@ -16,14 +16,18 @@ function App() {
   useLayoutEffect(() => {
     const verifyUser = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/v1/user/isUserLoggedIn", {
-          method: "GET",
-          credentials: "include",
-        });
+        const response = await fetch(
+          "http://localhost:5000/api/v1/user/isUserLoggedIn",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
         const data = await response.json();
         if (response.status === 200) {
           dispatch(setUser(data.userId));
-          dispatch(setDetails(data.user))
+          dispatch(setDetails(data.user));
+          dispatch(setGroups(data.user.groups));
           console.log(data);
         }
         if (response.status === 400) {
@@ -43,11 +47,9 @@ function App() {
     }
   }, [isUserLoggedIn]);
 
-
-  if(isloadingUser){
-    return <>Loading...</>
+  if (isloadingUser) {
+    return <>Loading...</>;
   }
-
 
   return (
     <>
