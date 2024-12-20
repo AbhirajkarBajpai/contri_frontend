@@ -33,6 +33,7 @@ function App() {
     };
     verifyUser();
   }, []);
+  
   useEffect(() => {
     if (isUserLoggedIn) {
       setIsLoadingUser(false);

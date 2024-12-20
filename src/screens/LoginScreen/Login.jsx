@@ -1,7 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Login.module.css";
+import { setUser } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const LoginScreen = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [emailOrPhoneNo, setEmailOrPhoneNo] = useState("");
+  const [password, setPassword] = useState("");
+
+  const loginSubmitHandler = async(e) => {
+    e.preventDefault();
+    const data = { emailOrPhoneNo, password };
+    try {
+      const response = await fetch("http://localhost:5000/api/v1/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        credentials: "include",
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log("login successful:", data);
+        dispatch(setUser(data.data.user._id));
+          navigate("/");
+      } else {
+        const errorData = await response.json();
+        console.log("login failed:", errorData);
+      }
+    } catch (error) {
+      console.error("Error occurred during login:", error);
+    }
+  };
+
   return (
     <div className={styles.loginPage}>
       <div className={styles.leftSection}>
@@ -79,14 +114,22 @@ const LoginScreen = () => {
       </div>
       <div className={styles.rightSection}>
         <h1 className={styles.loginTitle}>Login</h1>
-        <form className={styles.loginForm}>
+        <form className={styles.loginForm} onSubmit={loginSubmitHandler}>
           <label>Email/Contact No:</label>
-          <input type="email" placeholder="Email or Contact No" className={styles.input} />
+          <input
+            type="string"
+            placeholder="Email or Contact No"
+            className={styles.input}
+            value={emailOrPhoneNo}
+            onChange={(e) => setEmailOrPhoneNo(e.target.value)}
+          />
           <label>Password:</label>
           <input
             type="password"
             placeholder="Password"
             className={styles.input}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <div className={styles.options}>
             {/* <a href="#" className={styles.link}>Forgot Password?</a> */}

@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import "./Signup.css";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setUser } from "../../store/store";
 
 const SignupScreen = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [enteredName, setEnteredName] = useState('');
   const [enteredEmail, setEnteredEmail] = useState('');
   const [enteredPhoneNo, setEnteredPhoneNo] = useState('');
@@ -33,6 +38,10 @@ const SignupScreen = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("Signup successful:", data);
+        dispatch(setUser(data.data.user._id));
+        setTimeout(() => {
+          navigate("/");
+        }, 100);
       } else {
         const errorData = await response.json();
         console.error("Signup failed:", errorData);
