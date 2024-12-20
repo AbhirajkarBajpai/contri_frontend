@@ -30,6 +30,7 @@ const LoginScreen = () => {
           navigate("/");
       } else {
         const errorData = await response.json();
+        alert(errorData.message);
         console.log("login failed:", errorData);
       }
     } catch (error) {
