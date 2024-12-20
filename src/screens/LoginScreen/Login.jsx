@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Login.module.css";
-import { setUser } from "../../store/store";
+import { setDetails, setUser } from "../../store/store";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -27,6 +27,7 @@ const LoginScreen = () => {
         const data = await response.json();
         console.log("login successful:", data);
         dispatch(setUser(data.data.user._id));
+        dispatch(setDetails(data.data.user))
           navigate("/");
       } else {
         const errorData = await response.json();

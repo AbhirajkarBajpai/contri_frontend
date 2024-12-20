@@ -5,7 +5,7 @@ import Groups from "./screens/GroupScreen/Groups";
 
 const Main = () => {
   const [array, setarray] = useState([]);
-  const [active, setActive] = useState("Personal Info");
+  const [active, setActive] = useState("Your Groups");
   return (
     <>
       <Navbar active={active} setActive={setActive} />
