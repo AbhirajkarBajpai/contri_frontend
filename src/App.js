@@ -24,9 +24,11 @@ function App() {
         if (response.status === 200) {
           dispatch(setUser(data.userId));
         }
+        if (response.status === 400) {
+          setIsLoadingUser(false);
+        }
       } catch (error) {
-        console.error("Error verifying user:", error);
-        setIsLoadingUser(false);
+        console.log("Error verifying user:", error);
       }
     };
     verifyUser();
