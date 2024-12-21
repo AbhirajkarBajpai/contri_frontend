@@ -1,17 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Groups.module.css";
 import CreateGroup from "../../components/GroupForm/CreateGroup";
 import Modal from "../../components/Modal/Modal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setGroups } from "../../store/store";
 
 const Groups = () => {
+  const dispatch = useDispatch();
   const [isCreating, setIsCreating] = useState(false);
-  const  userGroups = useSelector((state) => state.userGroups.groups);
+  const userGroups = useSelector((state) => state.userGroups.groups);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(
+        "http://localhost:5000/api/v1/user/getUserGroups",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      console.log("fetched data",data);
+      dispatch(setGroups(data.groups));
+    }
+    fetchData();
+  }, []);
   return (
     <div className={styles.container}>
       {isCreating && (
         <Modal>
-          <CreateGroup onCancel={()=>setIsCreating(false)} />
+          <CreateGroup onCancel={() => setIsCreating(false)} />
         </Modal>
       )}
       <header className={styles.header}>
