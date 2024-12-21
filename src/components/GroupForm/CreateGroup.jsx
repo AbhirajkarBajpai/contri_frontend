@@ -39,7 +39,26 @@ function CreateGroup(props) {
     setMembers((prevMembers) => prevMembers.filter((_, i) => i !== index));
   }
 
-  function submitHandler(event) {
+  async function createGroup(grpData) {
+
+    console.log(grpData);
+    const response = await fetch(
+      "http://localhost:5000/api/v1/group/createGroup",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body : JSON.stringify(grpData),
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    console.log("group data", data);
+    return;
+  }
+
+  async function submitHandler(event) {
     event.preventDefault();
 
     if (!enteredName.trim()) {
@@ -56,48 +75,53 @@ function CreateGroup(props) {
       members: members,
       date: new Date(),
     };
-    props.onCreateGroup(GrpData);
+
+    await createGroup(GrpData);
+    alert('group created succesfully');
     setEnteredName("");
     setMembers([]);
+    props.onCancel();
   }
 
   return (
     // <div className="backdrop">
-      <form onSubmit={submitHandler} className="group-form">
-        <div className="form-control">
-          <label>Group Name:</label>
-          <input
-            type="text"
-            placeholder="Enter Group Name"
-            value={enteredName}
-            onChange={handleNameChange}
-          />
-        </div>
-        <div className="form-control">
-          <label>Member Name:</label>
-          <input
-            type="text"
-            placeholder="Enter Member Name"
-            value={memberName}
-            onChange={handleMemberNameChange}
-          />
-          <label>Contact No:</label>
-          <input
-            type="number"
-            placeholder="Enter Contact"
-            value={memberPhone}
-            onChange={handleMemberPhoneChange}
-          />
-          <br />
-          <button className="add-member-btn" onClick={addMemberHandler}>
-            Add Member
-          </button>
-        </div>
+    <form onSubmit={submitHandler} className="group-form">
+      <div className="form-control">
+        <label>Group Name:</label>
+        <input
+          type="text"
+          placeholder="Enter Group Name"
+          value={enteredName}
+          onChange={handleNameChange}
+        />
+      </div>
+      <div className="form-control">
+        <label>Member Name:</label>
+        <input
+          type="text"
+          placeholder="Enter Member Name"
+          value={memberName}
+          onChange={handleMemberNameChange}
+        />
+        <label>Contact No:</label>
+        <input
+          type="number"
+          placeholder="Enter Contact"
+          value={memberPhone}
+          onChange={handleMemberPhoneChange}
+        />
+        <br />
+        <button className="add-member-btn" onClick={addMemberHandler}>
+          Add Member
+        </button>
+      </div>
 
-        <div className="members-list">
-          <h4>Members Added:</h4>
-          <ul>
-            {members.length===0?<span className="noMemberState">No memebers Added Yet!</span>:
+      <div className="members-list">
+        <h4>Members Added:</h4>
+        <ul>
+          {members.length === 0 ? (
+            <span className="noMemberState">No memebers Added Yet!</span>
+          ) : (
             members.map((member, index) => (
               <li key={index} className="member-item">
                 {member.name} : {member.phone}{" "}
@@ -108,19 +132,20 @@ function CreateGroup(props) {
                   X
                 </button>
               </li>
-            ))}
-          </ul>
-        </div>
+            ))
+          )}
+        </ul>
+      </div>
 
-        <div className="form-actions">
-          <button type="button" onClick={props.onCancel} className="cancel-btn">
-            Cancel
-          </button>
-          <button type="submit" className="submit-btn">
-            Create Group
-          </button>
-        </div>
-      </form>
+      <div className="form-actions">
+        <button type="button" onClick={props.onCancel} className="cancel-btn">
+          Cancel
+        </button>
+        <button type="submit" className="submit-btn">
+          Create Group
+        </button>
+      </div>
+    </form>
     // </div>
   );
 }
