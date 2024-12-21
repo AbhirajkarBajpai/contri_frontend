@@ -28,6 +28,23 @@ const Groups = () => {
     }
     fetchData();
   }, []);
+
+  async function deleteGroup(groupId) {
+    const response = await fetch(
+      `http://localhost:5000/api/v1/group/deleteGroup/${groupId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    console.log("group data", data);
+    return;
+  }
+
   return (
     <div className={styles.container}>
       {isCreating && (
@@ -73,10 +90,10 @@ const Groups = () => {
                   Created By: {group.createdBy}
                 </p>
               </div>
-              {
-                group.createdBy === loggedInUser &&
+              {group.createdBy === loggedInUser && (
                 <svg
-                className={styles.delGroup}
+                  className={styles.delGroup}
+                  onClick={() => deleteGroup(group.id)}
                   viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +115,8 @@ const Groups = () => {
                       stroke-linejoin="round"
                     ></path>{" "}
                   </g>
-                </svg>}
+                </svg>
+              )}
             </li>
           ))}
         </ul>
