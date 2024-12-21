@@ -45,17 +45,15 @@ function Navbar({ active, setActive }) {
           menuOpen ? styles.navLinksMobile : ""
         }`}
       >
-        {active === "Personal Info" && (
-          <li
-            className={styles.navItem}
-            onClick={() => {
-              logoutHandler();
-              setMenuOpen(false);
-            }}
-          >
-            Logout
-          </li>
-        )}
+        <li
+          className={styles.navItem}
+          onClick={() => {
+            logoutHandler();
+            setMenuOpen(false);
+          }}
+        >
+          Logout
+        </li>
         <li
           className={`${styles.navItem} ${
             active === "Personal Info" ? styles.active : ""
