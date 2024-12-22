@@ -56,10 +56,27 @@ const userGroupsSlice = createSlice({
   },
 });
 
+
+const groupDataSlice = createSlice({
+  name: 'groupData',
+  initialState: {
+    groupData: null, 
+  },
+  reducers: {
+    setGroupData: (state, action) => {
+      state.groupData = action.payload;
+    },
+    clearGroupData: (state) => {
+      state.groupData = null;
+    },
+  },
+});
+
 // Export actions from slices
 export const { setUser, removeUser } = userSlice.actions;
 export const { setDetails } = userDetailsSlice.actions;
 export const { setGroups, addGroup, removeGroup, updateGroup } = userGroupsSlice.actions;
+export const { setGroupData, clearGroupData } = groupDataSlice.actions;
 
 // Configure store with reducers from slices
 const store = configureStore({
@@ -67,6 +84,7 @@ const store = configureStore({
     loggedInUser: userSlice.reducer,
     userDetail: userDetailsSlice.reducer,
     userGroups: userGroupsSlice.reducer,
+    groupData:groupDataSlice.reducer,
   },
 });
 

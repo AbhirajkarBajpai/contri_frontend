@@ -3,13 +3,16 @@ import styles from "./Groups.module.css";
 import CreateGroup from "../../../components/GroupForm/CreateGroup";
 import Modal from "../../../components/Modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { setGroups } from "../../../store/store";
+import { setGroups,setGroupData } from "../../../store/store";
+import { useNavigate } from "react-router-dom";
 
 const Groups = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const loggedInUser = useSelector((state) => state.loggedInUser.value);
   const [isCreating, setIsCreating] = useState(false);
   const userGroups = useSelector((state) => state.userGroups.groups);
+  
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
@@ -42,6 +45,7 @@ const Groups = () => {
     );
     const data = await response.json();
     console.log("group data", data);
+    dispatch(setGroupData(data));
     return;
   }
 
@@ -83,7 +87,7 @@ const Groups = () => {
       ) : (
         <ul className={styles.groupList}>
           {userGroups.map((group, index) => (
-            <li key={index} className={styles.groupItem}>
+            <li key={index} className={styles.groupItem} onClick={() => { navigate(`/expense/${group.id}`)}}>
               <div>
                 <h3 className={styles.groupName}>{group.name}</h3>
               </div>

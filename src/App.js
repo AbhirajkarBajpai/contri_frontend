@@ -6,6 +6,7 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser, setDetails, setGroups } from "./store/store";
+import Expenses from "./screens/GroupScreen/GroupExpenses/Expenses";
 
 function App() {
   const isUserLoggedIn = useSelector((state) => state.loggedInUser.value);
@@ -60,6 +61,7 @@ function App() {
         />
         <Route path="/signup" element={<SignupScreen />} />
         <Route path="/login" element={<LoginScreen />} />
+        <Route path="/expense/:id" element={<Expenses />} />
       </Routes>
     </>
   );
