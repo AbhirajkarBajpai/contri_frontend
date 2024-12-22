@@ -26,7 +26,7 @@ const Expenses = () => {
         }
         const data = await response.json();
         console.log("Group data:", data);
-        setGroupData(data);
+        setGroupData(data.group);
       } catch (error) {
         console.error("Error fetching group data:", error);
       }
@@ -36,11 +36,10 @@ const Expenses = () => {
     }
   }, [id]);
 
-
   return (
     <div className={styles.ExpensesPage}>
       <div className={styles.grpName}>
-        <span>Group A</span>
+        <span>{groupData?.name}</span>
       </div>
       <svg
         className={styles.addExpensebtn}
@@ -65,35 +64,38 @@ const Expenses = () => {
         </g>
       </svg>
       <div className={styles.expensesContn}>
-        <div className={styles.expenseBox}>
-          <span className={styles.expenseName}>Expense1</span>
-          <div className={styles.expensePayer}>
-            <span>Paid By :</span>
-            <span>Abhirajkar</span>
-          </div>
-        </div>
-        <div className={styles.expenseBox}>
-          <span className={styles.expenseName}>Expense1</span>
-          <div className={styles.expensePayer}>
-            <span>Paid By :</span>
-            <span>Abhirajkar</span>
-          </div>
-        </div>
+        {groupData?.expenses?.length > 0 ? (
+          groupData.expenses?.map((expense) => (
+            <div className={styles.expenseBox}>
+              <span className={styles.expenseName}>{expense.name}</span>
+              <div className={styles.expensePayer}>
+                <span>Paid By :</span>
+                <span>{expense.paidBy}</span>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p style={{color:"white"}}>No Expense Found!</p>
+        )}
       </div>
       <div className={styles.grpMembers}>
         <h2>Group Members</h2>
         <ul>
-          <li>Abhirajkar</li>
-          <li>John Doe</li>
-          <li>Jane Smith</li>
+          {groupData?.members.map((member, i) => (
+            <li key={i}>{member?.name}</li>
+          ))}
         </ul>
       </div>
       <div className={styles.debtsSection}>
         <h2>Debts</h2>
         <ul>
-          <li>Abhirajkar owes Jane Smith $10</li>
-          <li>John Doe owes Abhirajkar $20</li>
-          <li>Jane Smith owes John Doe $5</li>
+          {groupData?.groupSettelmentDetails?.length > 0 ? (
+            groupData.groupSettelmentDetails.map((debt, i) => (
+              <li key={i}>{debt}</li>
+            ))
+          ) : (
+            <li>No settlement founds</li>
+          )}
         </ul>
       </div>
     </div>
