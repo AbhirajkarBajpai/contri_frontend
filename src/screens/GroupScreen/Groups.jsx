@@ -86,9 +86,6 @@ const Groups = () => {
             <li key={index} className={styles.groupItem}>
               <div>
                 <h3 className={styles.groupName}>{group.name}</h3>
-                <p className={styles.groupCreatedBy}>
-                  Created By: {group.createdBy}
-                </p>
               </div>
               {group.createdBy === loggedInUser && (
                 <svg
