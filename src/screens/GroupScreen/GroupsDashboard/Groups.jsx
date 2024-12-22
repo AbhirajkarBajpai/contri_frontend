@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Groups.module.css";
-import CreateGroup from "../../components/GroupForm/CreateGroup";
-import Modal from "../../components/Modal/Modal";
+import CreateGroup from "../../../components/GroupForm/CreateGroup";
+import Modal from "../../../components/Modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { setGroups } from "../../store/store";
+import { setGroups } from "../../../store/store";
 
 const Groups = () => {
   const dispatch = useDispatch();

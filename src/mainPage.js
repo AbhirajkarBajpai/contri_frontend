@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PersonalInfo from "./screens/PersonalInfoScreen/PersonalInfo";
 import Navbar from "./components/Navbar/Navbar";
-import Groups from "./screens/GroupScreen/Groups";
+import Groups from "./screens/GroupScreen/GroupsDashboard/Groups";
 
 const Main = () => {
   const [active, setActive] = useState("Your Groups");
