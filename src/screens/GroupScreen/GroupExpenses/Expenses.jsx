@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import styles from "./Expenses.module.css";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import ExpenseForm from "../../../components/ExpenseForm/ExpenseForm";
+import Modal from "../../../components/Modal/Modal";
 
 const Expenses = () => {
   //   const groupData = useSelector((state) => state.groupData.groupData);
   const { id } = useParams();
   const [groupData, setGroupData] = useState(null);
+  const [isCreatingExpense, setIsCreatingExpense] = useState(false);
 
   useEffect(() => {
     const getGroup = async (groupId) => {
@@ -38,11 +41,17 @@ const Expenses = () => {
 
   return (
     <div className={styles.ExpensesPage}>
+       {isCreatingExpense && (
+        <Modal>
+          <ExpenseForm onCancel={() => setIsCreatingExpense(false)} />
+        </Modal>
+      )}
       <div className={styles.grpName}>
         <span>{groupData?.name}</span>
       </div>
       <svg
         className={styles.addExpensebtn}
+        onClick={()=>setIsCreatingExpense(true)}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
