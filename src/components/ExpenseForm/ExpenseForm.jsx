@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
-import styles from './ExpenseForm.module.css';
+import React, { useState } from "react";
+import styles from "./ExpenseForm.module.css";
+import { useSelector } from "react-redux";
 
-const ExpenseForm = ({ members = [] }) => {
-  const [expenseName, setExpenseName] = useState('');
-  const [totalAmount, setTotalAmount] = useState('');
+const ExpenseForm = ({ onCancel,members = [] }) => {
+  const isUserLoggedIn = useSelector((state) => state.loggedInUser.value);
+  const [expenseName, setExpenseName] = useState("");
+  const [totalAmount, setTotalAmount] = useState("");
   const [selectedMembers, setSelectedMembers] = useState([]);
   const [manualAmounts, setManualAmounts] = useState({});
-  const [splitRemaining, setSplitRemaining] = useState(false);
+  const [includeInSplit, setIncludeInSplit] = useState({});
 
   const handleMemberToggle = (member) => {
     setSelectedMembers((prev) =>
@@ -14,37 +16,40 @@ const ExpenseForm = ({ members = [] }) => {
         ? prev.filter((m) => m !== member)
         : [...prev, member]
     );
+    if (!selectedMembers.includes(member)) {
+      setIncludeInSplit((prev) => ({ ...prev, [member]: true }));
+    } else {
+      setIncludeInSplit((prev) => {
+        const newSplitState = { ...prev };
+        delete newSplitState[member];
+        return newSplitState;
+      });
+    }
   };
 
   const handleManualAmountChange = (member, amount) => {
     setManualAmounts((prev) => ({ ...prev, [member]: amount }));
+    if (!amount) {
+      setIncludeInSplit((prev) => ({ ...prev, [member]: true }));
+    }
+  };
+
+  const handleIncludeInSplitChange = (member, include) => {
+    setIncludeInSplit((prev) => ({ ...prev, [member]: include }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const manualTotal = Object.values(manualAmounts).reduce(
-      (sum, amount) => sum + (parseFloat(amount) || 0),
-      0
-    );
-    const remainingAmount = totalAmount - manualTotal;
-    const autoSplitAmount =
-      splitRemaining && remainingAmount > 0
-        ? remainingAmount / (selectedMembers.length - Object.keys(manualAmounts).length)
-        : 0;
-
-    const finalSplit = selectedMembers.map((member) => ({
-      member,
-      amount: manualAmounts[member] || autoSplitAmount,
-    }));
-    console.log({ expenseName, totalAmount, finalSplit });
-    alert('Expense created successfully!');
+    alert("Expense created successfully!");
+    onCancel();
   };
-  
+
   return (
     <form className={styles.formContainer} onSubmit={handleSubmit}>
       <div>
         <label>Expense Name:</label>
         <input
+          className={styles.formContainer_input}
           type="text"
           value={expenseName}
           onChange={(e) => setExpenseName(e.target.value)}
@@ -54,53 +59,61 @@ const ExpenseForm = ({ members = [] }) => {
       <div>
         <label>Total Amount:</label>
         <input
+          className={styles.formContainer_input}
           type="number"
           value={totalAmount}
-          onChange={(e) => setTotalAmount(parseFloat(e.target.value) || '')}
+          onChange={(e) => setTotalAmount(parseFloat(e.target.value) || "")}
           required
         />
       </div>
       <div>
         <label>Include Members:</label>
         {members.map((member) => (
-          <div key={member}>
+          <div key={member._id}>
             <label>
               <input
                 type="checkbox"
-                checked={selectedMembers.includes(member)}
-                onChange={() => handleMemberToggle(member)}
+                checked={selectedMembers.includes(member.name)}
+                onChange={() => handleMemberToggle(member.name)}
               />
-              {member}
+              {member._id === isUserLoggedIn? "Yourself" : member.name}
             </label>
-            {selectedMembers.includes(member) && (
-              <div>
-                <label>Manual Amount:</label>
+            {selectedMembers.includes(member.name) && (
+              <div className={styles.selMemContn}>
                 <input
                   type="number"
-                  value={manualAmounts[member] || ''}
+                  className={styles.manualInput}
+                  placeholder="Enter manual Lent(if Any)"
+                  value={manualAmounts[member.name] || ""}
                   onChange={(e) =>
                     handleManualAmountChange(
-                      member,
-                      parseFloat(e.target.value) || ''
+                      member.name,
+                      parseFloat(e.target.value) || ""
                     )
                   }
                 />
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={includeInSplit[member.name] || false}
+                    onChange={(e) =>
+                      handleIncludeInSplitChange(member.name, e.target.checked)
+                    }
+                  />
+                  Also Include in Remaining Split 
+                </label>
               </div>
             )}
           </div>
         ))}
       </div>
-      <div>
-        <label>
-          <input
-            type="checkbox"
-            checked={splitRemaining}
-            onChange={(e) => setSplitRemaining(e.target.checked)}
-          />
-          Split Remaining Amount
-        </label>
+      <div className={styles.expenseFormActions}>
+        <button type="button" className={styles.cancelExpense} onClick={onCancel}>
+          Cancel
+        </button>
+        <button type="submit" className={styles.createExpense}>Create Expense</button>
       </div>
-      <button type="submit">Create Expense</button>
+      
     </form>
   );
 };

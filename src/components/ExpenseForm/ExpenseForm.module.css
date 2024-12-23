@@ -1,98 +1,137 @@
 .formContainer {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  margin: 15vh auto;
+  background: #0a122a;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.formContainer label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #d3cfcf;
+}
+
+.formContainer_input{
+  width: 80%;
+  padding: 6px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.formContainer input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.manualInput{
+  width: 40%;
+  padding: 6px;
+  margin-bottom: 16px;
+  border: 1px solid #7b2222;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.selMemContn{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.memberItem {
+  margin-bottom: 16px;
+}
+
+.memberItem input[type="number"] {
+  margin-top: 8px;
+  width: calc(100% - 16px);
+}
+
+.splitRemaining {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.splitRemaining label {
+  margin-left: 8px;
+}
+
+.expenseFormActions{
+  display: flex;
+  flex-direction: row;
+  gap: 5%;
+  margin-top: 2vh;
+}
+.cancelExpense{
+  color: #ccc;
+  background-color: #7b2222;
+  height: 5vh;
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 1vh;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.cancelExpense:hover{
+  background-color: #5f1b0f;
+}
+.createExpense{
+  color: #ccc;
+  background-color: rgb(26, 97, 99);
+  height: 5vh;
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 1vh;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.createExpense:hover{
+  background-color: #198f91;
+}
+
+@media (max-width: 768px) {
+  .formContainer {
+    padding: 15px;
   }
-  
-  .formContainer label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #333;
+
+  button {
+    font-size: 14px;
+    padding: 10px;
   }
-  
+
   .formContainer input[type="text"],
   .formContainer input[type="number"] {
-    width: 100%;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .formContainer {
     padding: 10px;
-    margin-bottom: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
   }
-  
-  .formContainer input[type="checkbox"] {
-    margin-right: 8px;
-  }
-  
-  .memberItem {
-    margin-bottom: 16px;
-  }
-  
-  .memberItem input[type="number"] {
-    margin-top: 8px;
-    width: calc(100% - 16px);
-  }
-  
-  .splitRemaining {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .splitRemaining label {
-    margin-left: 8px;
-  }
-  
+
   button {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 12px;
+    padding: 8px;
   }
-  
-  button:hover {
-    background-color: #0056b3;
+
+  .formContainer input[type="text"],
+  .formContainer input[type="number"] {
+    font-size: 12px;
   }
-  
-  @media (max-width: 768px) {
-    .formContainer {
-      padding: 15px;
-    }
-  
-    button {
-      font-size: 14px;
-      padding: 10px;
-    }
-  
-    .formContainer input[type="text"],
-    .formContainer input[type="number"] {
-      font-size: 14px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .formContainer {
-      padding: 10px;
-    }
-  
-    button {
-      font-size: 12px;
-      padding: 8px;
-    }
-  
-    .formContainer input[type="text"],
-    .formContainer input[type="number"] {
-      font-size: 12px;
-    }
-  }
-  
+}
