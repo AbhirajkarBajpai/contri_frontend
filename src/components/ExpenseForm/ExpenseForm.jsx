@@ -41,18 +41,46 @@ const ExpenseForm = ({ groupId, onCancel, members = [] }) => {
     setIncludeInSplit((prev) => ({ ...prev, [member]: include }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const manualAmountsArray = Object.entries(manualAmounts).map(
+      ([user, amount]) => ({
+        user,
+        amount,
+      })
+    );
     const body = {
       groupId: groupId,
       amount: totalAmount,
       description: expenseName,
-      manualSplits: manualAmounts,
+      manualSplits: manualAmountsArray,
       selectedUsers: selectedMembers,
     };
     console.log("data", body);
-    alert("Expense created successfully!");
-    onCancel();
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/v1/expense/addExpense",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log("Expsense data:", data);
+      alert("Expense created successfully!");
+      // onCancel();
+    } catch (error) {
+      console.error("Error fetching group data:", error);
+      alert("something went wrong!");
+      // onCancel();
+    }
   };
 
   return (
