@@ -87,7 +87,7 @@ const Groups = () => {
       ) : (
         <ul className={styles.groupList}>
           {userGroups.map((group, index) => (
-            <li key={index} className={styles.groupItem} onClick={() => { navigate(`/expense/${group.id}`)}}>
+            <li key={index} className={styles.groupItem} onClick={() => { navigate(`/group/${group.id}`)}}>
               <div>
                 <h3 className={styles.groupName}>{group.name}</h3>
               </div>

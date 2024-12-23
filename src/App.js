@@ -61,7 +61,7 @@ function App() {
         />
         <Route path="/signup" element={<SignupScreen />} />
         <Route path="/login" element={<LoginScreen />} />
-        <Route path="/expense/:id" element={<Expenses />} />
+        <Route path="/group/:id" element={<Expenses />} />
       </Routes>
     </>
   );

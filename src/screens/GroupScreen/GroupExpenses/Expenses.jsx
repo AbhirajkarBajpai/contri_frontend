@@ -43,7 +43,7 @@ const Expenses = () => {
     <div className={styles.ExpensesPage}>
        {isCreatingExpense && (
         <Modal>
-          <ExpenseForm members={groupData?.members} onCancel={() => setIsCreatingExpense(false)} />
+          <ExpenseForm groupId={id} members={groupData?.members} onCancel={() => setIsCreatingExpense(false)} />
         </Modal>
       )}
       <div className={styles.grpName}>

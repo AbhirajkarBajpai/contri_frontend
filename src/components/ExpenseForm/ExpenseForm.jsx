@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./ExpenseForm.module.css";
 import { useSelector } from "react-redux";
 
-const ExpenseForm = ({ onCancel,members = [] }) => {
+const ExpenseForm = ({ groupId, onCancel, members = [] }) => {
   const isUserLoggedIn = useSelector((state) => state.loggedInUser.value);
   const [expenseName, setExpenseName] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
@@ -28,6 +28,9 @@ const ExpenseForm = ({ onCancel,members = [] }) => {
   };
 
   const handleManualAmountChange = (member, amount) => {
+    if (amount === "") {
+      return;
+    }
     setManualAmounts((prev) => ({ ...prev, [member]: amount }));
     if (!amount) {
       setIncludeInSplit((prev) => ({ ...prev, [member]: true }));
@@ -40,6 +43,14 @@ const ExpenseForm = ({ onCancel,members = [] }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const body = {
+      groupId: groupId,
+      amount: totalAmount,
+      description: expenseName,
+      manualSplits: manualAmounts,
+      selectedUsers: selectedMembers,
+    };
+    console.log("data", body);
     alert("Expense created successfully!");
     onCancel();
   };
@@ -73,21 +84,21 @@ const ExpenseForm = ({ onCancel,members = [] }) => {
             <label>
               <input
                 type="checkbox"
-                checked={selectedMembers.includes(member.name)}
-                onChange={() => handleMemberToggle(member.name)}
+                checked={selectedMembers.includes(member._id)}
+                onChange={() => handleMemberToggle(member._id)}
               />
-              {member._id === isUserLoggedIn? "Yourself" : member.name}
+              {member._id === isUserLoggedIn ? "Yourself" : member.name}
             </label>
-            {selectedMembers.includes(member.name) && (
+            {selectedMembers.includes(member._id) && (
               <div className={styles.selMemContn}>
                 <input
                   type="number"
                   className={styles.manualInput}
                   placeholder="Enter manual Lent(if Any)"
-                  value={manualAmounts[member.name] || ""}
+                  value={manualAmounts[member._id] || ""}
                   onChange={(e) =>
                     handleManualAmountChange(
-                      member.name,
+                      member._id,
                       parseFloat(e.target.value) || ""
                     )
                   }
@@ -95,12 +106,12 @@ const ExpenseForm = ({ onCancel,members = [] }) => {
                 <label>
                   <input
                     type="checkbox"
-                    checked={includeInSplit[member.name] || false}
+                    checked={includeInSplit[member._id] || false}
                     onChange={(e) =>
-                      handleIncludeInSplitChange(member.name, e.target.checked)
+                      handleIncludeInSplitChange(member._id, e.target.checked)
                     }
                   />
-                  Also Include in Remaining Split 
+                  Also Include in Remaining Split
                 </label>
               </div>
             )}
@@ -108,12 +119,17 @@ const ExpenseForm = ({ onCancel,members = [] }) => {
         ))}
       </div>
       <div className={styles.expenseFormActions}>
-        <button type="button" className={styles.cancelExpense} onClick={onCancel}>
+        <button
+          type="button"
+          className={styles.cancelExpense}
+          onClick={onCancel}
+        >
           Cancel
         </button>
-        <button type="submit" className={styles.createExpense}>Create Expense</button>
+        <button type="submit" className={styles.createExpense}>
+          Create Expense
+        </button>
       </div>
-      
     </form>
   );
 };
