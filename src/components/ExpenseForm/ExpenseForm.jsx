@@ -43,10 +43,12 @@ const ExpenseForm = ({ groupId, onCancel, members = [] }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(manualAmounts, includeInSplit);
     const manualAmountsArray = Object.entries(manualAmounts).map(
       ([user, amount]) => ({
         user,
         amount,
+        isInclude: includeInSplit[user] || false,
       })
     );
     const body = {
