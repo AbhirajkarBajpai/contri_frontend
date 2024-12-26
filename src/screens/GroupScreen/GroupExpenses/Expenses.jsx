@@ -10,6 +10,7 @@ const Expenses = () => {
   const { id } = useParams();
   const [groupData, setGroupData] = useState(null);
   const [isCreatingExpense, setIsCreatingExpense] = useState(false);
+  const [userIdToName, setUserIdToName] = useState({});
 
   useEffect(() => {
     const getGroup = async (groupId) => {
@@ -30,6 +31,11 @@ const Expenses = () => {
         const data = await response.json();
         console.log("Group data:", data);
         setGroupData(data.group);
+        const map = data.group.members.reduce((acc, member) => {
+          acc[member._id] = member.name;
+          return acc;
+        }, {});
+        setUserIdToName(map);
       } catch (error) {
         console.error("Error fetching group data:", error);
       }
@@ -39,11 +45,19 @@ const Expenses = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    console.log("map", userIdToName);
+  }, [userIdToName]);
+
   return (
     <div className={styles.ExpensesPage}>
-       {isCreatingExpense && (
+      {isCreatingExpense && (
         <Modal>
-          <ExpenseForm groupId={id} members={groupData?.members} onCancel={() => setIsCreatingExpense(false)} />
+          <ExpenseForm
+            groupId={id}
+            members={groupData?.members}
+            onCancel={() => setIsCreatingExpense(false)}
+          />
         </Modal>
       )}
       <div className={styles.grpName}>
@@ -51,7 +65,7 @@ const Expenses = () => {
       </div>
       <svg
         className={styles.addExpensebtn}
-        onClick={()=>setIsCreatingExpense(true)}
+        onClick={() => setIsCreatingExpense(true)}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -76,16 +90,39 @@ const Expenses = () => {
         {groupData?.expenses?.length > 0 ? (
           groupData.expenses?.map((expense) => (
             <div className={styles.expenseBox}>
-              <span className={styles.expenseName}>{expense.name}</span>
+              <div className={styles.expenseInfo}>
+                <span className={styles.expenseName}>
+                  {expense.description}
+                </span>
+                <span className={styles.expenseAmount}>({expense.amount})</span>
+              </div>
               <div className={styles.expensePayer}>
                 <span>Paid By :</span>
-                <span>{expense.paidBy}</span>
+                <span>{userIdToName[expense.createdBy]}</span>
               </div>
             </div>
           ))
         ) : (
-          <p style={{color:"white"}}>No Expense Found!</p>
+          <p style={{ color: "white" }}>No Expense Found!</p>
         )}
+      </div>
+      <div className={styles.debtsSection}>
+        <h2>Debts</h2>
+        <ul>
+          {groupData?.groupSettelmentDetails?.length > 0 ? (
+            groupData.groupSettelmentDetails.map(
+              (debt) =>
+                debt.user1 !== debt.user2 && (
+                  <li key={debt._id}>
+                    {userIdToName[debt.user1]} lends {userIdToName[debt.user2]}:{" "}
+                    {Math.abs(debt.amount)}
+                  </li>
+                )
+            )
+          ) : (
+            <li>No settlement founds</li>
+          )}
+        </ul>
       </div>
       <div className={styles.grpMembers}>
         <h2>Group Members</h2>
@@ -93,18 +130,6 @@ const Expenses = () => {
           {groupData?.members.map((member, i) => (
             <li key={i}>{member?.name}</li>
           ))}
-        </ul>
-      </div>
-      <div className={styles.debtsSection}>
-        <h2>Debts</h2>
-        <ul>
-          {groupData?.groupSettelmentDetails?.length > 0 ? (
-            groupData.groupSettelmentDetails.map((debt, i) => (
-              <li key={i}>{debt}</li>
-            ))
-          ) : (
-            <li>No settlement founds</li>
-          )}
         </ul>
       </div>
     </div>
