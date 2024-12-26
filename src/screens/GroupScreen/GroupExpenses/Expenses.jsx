@@ -4,12 +4,15 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import ExpenseForm from "../../../components/ExpenseForm/ExpenseForm";
 import Modal from "../../../components/Modal/Modal";
+import ExpenseInfo from "../../../components/ExpenseInfo/ExpenseInfo";
 
 const Expenses = () => {
   //   const groupData = useSelector((state) => state.groupData.groupData);
   const { id } = useParams();
   const [groupData, setGroupData] = useState(null);
+  const [expenseId, setExpenseId] = useState("");
   const [isCreatingExpense, setIsCreatingExpense] = useState(false);
+  const [isOpenExpenseInfo, setIsOpenExpenseInfo] = useState(false);
   const [userIdToName, setUserIdToName] = useState({});
   const loggedInUser = useSelector((state) => state.loggedInUser.value);
 
@@ -46,10 +49,6 @@ const Expenses = () => {
     }
   }, [id]);
 
-  useEffect(() => {
-    console.log("map", userIdToName);
-  }, [userIdToName]);
-
   return (
     <div className={styles.ExpensesPage}>
       {isCreatingExpense && (
@@ -58,6 +57,14 @@ const Expenses = () => {
             groupId={id}
             members={groupData?.members}
             onCancel={() => setIsCreatingExpense(false)}
+          />
+        </Modal>
+      )}
+      {isOpenExpenseInfo && (
+        <Modal>
+          <ExpenseInfo
+            onClose={() => setIsOpenExpenseInfo(false)}
+            expenseId={expenseId}
           />
         </Modal>
       )}
@@ -90,7 +97,13 @@ const Expenses = () => {
       <div className={styles.expensesContn}>
         {groupData?.expenses?.length > 0 ? (
           groupData.expenses?.map((expense) => (
-            <div className={styles.expenseBox}>
+            <div
+              onClick={() => {
+                setExpenseId(expense._id);
+                setIsOpenExpenseInfo(true);
+              }}
+              className={styles.expenseBox}
+            >
               <div className={styles.expenseInfo}>
                 <span className={styles.expenseName}>
                   {expense.description}
