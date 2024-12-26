@@ -11,6 +11,7 @@ const Expenses = () => {
   const [groupData, setGroupData] = useState(null);
   const [isCreatingExpense, setIsCreatingExpense] = useState(false);
   const [userIdToName, setUserIdToName] = useState({});
+  const loggedInUser = useSelector((state) => state.loggedInUser.value);
 
   useEffect(() => {
     const getGroup = async (groupId) => {
@@ -98,7 +99,11 @@ const Expenses = () => {
               </div>
               <div className={styles.expensePayer}>
                 <span>Paid By :</span>
-                <span>{userIdToName[expense.createdBy]}</span>
+                <span>
+                  {expense.createdBy === loggedInUser
+                    ? "You"
+                    : userIdToName[expense.createdBy]}
+                </span>
               </div>
             </div>
           ))
@@ -114,8 +119,14 @@ const Expenses = () => {
               (debt) =>
                 debt.user1 !== debt.user2 && (
                   <li key={debt._id}>
-                    {userIdToName[debt.user1]} lends {userIdToName[debt.user2]}:{" "}
-                    {Math.abs(debt.amount)}
+                    {debt.user1 === loggedInUser
+                      ? "You"
+                      : userIdToName[debt.user1]}{" "}
+                    lends{" "}
+                    {debt.user2 === loggedInUser
+                      ? "You"
+                      : userIdToName[debt.user2]}
+                    : {Math.abs(debt.amount)}
                   </li>
                 )
             )
@@ -128,7 +139,9 @@ const Expenses = () => {
         <h2>Group Members</h2>
         <ul>
           {groupData?.members.map((member, i) => (
-            <li key={i}>{member?.name}</li>
+            <li key={i}>
+              {member?._id === loggedInUser ? "You" : member?.name}
+            </li>
           ))}
         </ul>
       </div>
