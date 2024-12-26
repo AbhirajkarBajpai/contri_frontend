@@ -12,7 +12,6 @@ const ExpenseInfo = ({ onClose, expenseId, userMap }) => {
   };
 
   async function fetchExpenseData(expenseId) {
-    console.log("id Trying", expenseId);
     try {
       const response = await fetch(
         `http://localhost:5000/api/v1/expense/getExpense/${expenseId}`,
