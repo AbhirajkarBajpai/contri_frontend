@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ExpenseInfo.module.css";
 
-const ExpenseInfo = ({ onClose, expenseId }) => {
+const ExpenseInfo = ({ onClose, expenseId, userMap }) => {
   const [expenseData, setExpenseData] = useState();
   const [formattedDate, setFormattedDate] = useState();
 
@@ -12,7 +12,7 @@ const ExpenseInfo = ({ onClose, expenseId }) => {
   };
 
   async function fetchExpenseData(expenseId) {
-    console.log("id Trying",expenseId);
+    console.log("id Trying", expenseId);
     try {
       const response = await fetch(
         `http://localhost:5000/api/v1/expense/getExpense/${expenseId}`,
@@ -37,8 +37,8 @@ const ExpenseInfo = ({ onClose, expenseId }) => {
     fetchExpenseData(expenseId);
   }, []);
 
-  if(expenseData===undefined){
-    return <>Loading...</>
+  if (expenseData === undefined) {
+    return <>Loading...</>;
   }
   return (
     <div className={styles.overlay}>
@@ -48,7 +48,7 @@ const ExpenseInfo = ({ onClose, expenseId }) => {
           <strong>Date:</strong> {formattedDate}
         </p>
         <p>
-          <strong>By:</strong> {expenseData.createdBy}
+          <strong>By:</strong> {userMap[expenseData.createdBy]}
         </p>
         <p>
           <strong>Amount:</strong> {expenseData.amount} Rs
@@ -60,9 +60,13 @@ const ExpenseInfo = ({ onClose, expenseId }) => {
           <strong>Split Info:</strong>
         </p>
         <div className={styles.scrollable_component}>
-        {expenseData.splitDetails.map((debt)=>{
-            return <p key={debt._id}>{debt.userPaid} lends {debt.user2}: {Math.abs(debt.amount)}</p>
-        })}
+          {expenseData.splitDetails.map((debt) => {
+            return (
+              <p key={debt._id}>
+                {userMap[debt.userPaid]} lends {userMap[debt.user2]}: {Math.abs(debt.amount)}
+              </p>
+            );
+          })}
         </div>
         <button onClick={onClose}>Close</button>
       </div>

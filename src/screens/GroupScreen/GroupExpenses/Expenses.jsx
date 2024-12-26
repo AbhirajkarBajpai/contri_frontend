@@ -65,6 +65,7 @@ const Expenses = () => {
           <ExpenseInfo
             onClose={() => setIsOpenExpenseInfo(false)}
             expenseId={expenseId}
+            userMap={userIdToName}
           />
         </Modal>
       )}
