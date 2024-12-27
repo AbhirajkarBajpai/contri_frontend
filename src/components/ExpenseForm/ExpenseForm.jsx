@@ -77,11 +77,11 @@ const ExpenseForm = ({ groupId, onCancel, members = [] }) => {
       const data = await response.json();
       console.log("Expsense data:", data);
       alert("Expense created successfully!");
-      // onCancel();
+      onCancel();
     } catch (error) {
       console.error("Error fetching group data:", error);
       alert("something went wrong!");
-      // onCancel();
+      onCancel();
     }
   };
 
