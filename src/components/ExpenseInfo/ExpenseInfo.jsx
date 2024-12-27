@@ -64,7 +64,7 @@ const ExpenseInfo = ({ onClose, expenseId, userMap }) => {
           {expenseData.splitDetails.map((debt) => {
             return (
               <p key={debt._id}>
-                {userMap[debt.userPaid]} lends {userMap[debt.user2]}:{" "}
+                {userMap[debt.user2]}:{" "}
                 {Math.abs(debt.amount)}
               </p>
             );

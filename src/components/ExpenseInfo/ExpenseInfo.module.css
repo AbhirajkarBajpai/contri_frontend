@@ -23,12 +23,15 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 .overlay_content h3{
-  color: aliceblue;
+  color: aqua;
   margin: 1vh;
 }
 .overlay_content p{
-  color: aliceblue;
+  color: rgb(244, 238, 230);
   margin: 1vh;
+}
+.overlay_content strong{
+  color: aliceblue;
 }
 
 .scrollable_component {
