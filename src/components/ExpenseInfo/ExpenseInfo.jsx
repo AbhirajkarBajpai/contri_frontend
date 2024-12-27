@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ExpenseInfo.module.css";
+import closeBtn from "../../assets/img/CloseBtn.png";
 
 const ExpenseInfo = ({ onClose, expenseId, userMap }) => {
   const [expenseData, setExpenseData] = useState();
@@ -42,6 +43,7 @@ const ExpenseInfo = ({ onClose, expenseId, userMap }) => {
   return (
     <div className={styles.overlay}>
       <div className={styles.overlay_content}>
+        <img onClick={onClose} className={styles.closeBtn} src={closeBtn}></img>
         <h3>Expense Info</h3>
         <p>
           <strong>Date:</strong> {formattedDate}
@@ -62,12 +64,12 @@ const ExpenseInfo = ({ onClose, expenseId, userMap }) => {
           {expenseData.splitDetails.map((debt) => {
             return (
               <p key={debt._id}>
-                {userMap[debt.userPaid]} lends {userMap[debt.user2]}: {Math.abs(debt.amount)}
+                {userMap[debt.userPaid]} lends {userMap[debt.user2]}:{" "}
+                {Math.abs(debt.amount)}
               </p>
             );
           })}
         </div>
-        <button onClick={onClose}>Close</button>
       </div>
     </div>
   );
