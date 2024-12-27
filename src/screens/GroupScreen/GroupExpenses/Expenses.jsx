@@ -143,7 +143,19 @@ const Expenses = () => {
           {groupData?.groupSettelmentDetails?.length > 0 ? (
             groupData.groupSettelmentDetails.map(
               (debt) =>
-                debt.user1 !== debt.user2 && (
+                debt.user1 !== debt.user2 &&
+                (debt.amount > 0 ? (
+                  <li key={debt._id}>
+                    {debt.user2 === loggedInUser
+                      ? "You"
+                      : userIdToName[debt.user2]}{" "}
+                    lends{" "}
+                    {debt.user1 === loggedInUser
+                      ? "You"
+                      : userIdToName[debt.user1]}
+                    : {Math.abs(debt.amount)}
+                  </li>
+                ) : (
                   <li key={debt._id}>
                     {debt.user1 === loggedInUser
                       ? "You"
@@ -154,7 +166,7 @@ const Expenses = () => {
                       : userIdToName[debt.user2]}
                     : {Math.abs(debt.amount)}
                   </li>
-                )
+                ))
             )
           ) : (
             <li>No settlement founds</li>
