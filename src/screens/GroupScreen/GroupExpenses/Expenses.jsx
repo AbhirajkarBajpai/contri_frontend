@@ -13,41 +13,52 @@ const Expenses = () => {
   const [expenseId, setExpenseId] = useState("");
   const [isCreatingExpense, setIsCreatingExpense] = useState(false);
   const [isOpenExpenseInfo, setIsOpenExpenseInfo] = useState(false);
+  const [fetchAgain, setFetchAgain] = useState(false);
   const [userIdToName, setUserIdToName] = useState({});
   const loggedInUser = useSelector((state) => state.loggedInUser.value);
 
-  useEffect(() => {
-    const getGroup = async (groupId) => {
-      try {
-        const response = await fetch(
-          `http://localhost:5000/api/v1/group/groupDetail/${groupId}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-          }
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+  const getGroup = async (groupId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/v1/group/groupDetail/${groupId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
         }
-        const data = await response.json();
-        console.log("Group data:", data);
-        setGroupData(data.group);
-        const map = data.group.members.reduce((acc, member) => {
-          acc[member._id] = member.name;
-          return acc;
-        }, {});
-        setUserIdToName(map);
-      } catch (error) {
-        console.error("Error fetching group data:", error);
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    };
+      const data = await response.json();
+      console.log("Group data:", data);
+      setGroupData(data.group);
+      const map = data.group.members.reduce((acc, member) => {
+        acc[member._id] = member.name;
+        return acc;
+      }, {});
+      setUserIdToName(map);
+    } catch (error) {
+      console.error("Error fetching group data:", error);
+    }
+  };
+
+  useEffect(() => {
     if (id) {
       getGroup(id);
     }
   }, [id]);
+
+  useEffect(() => {
+    if (fetchAgain) {
+      setFetchAgain(false);
+      if (id) {
+        getGroup(id);
+      }
+    }
+  }, [fetchAgain]);
 
   return (
     <div className={styles.ExpensesPage}>
@@ -57,6 +68,7 @@ const Expenses = () => {
             groupId={id}
             members={groupData?.members}
             onCancel={() => setIsCreatingExpense(false)}
+            onComplete={() => setFetchAgain(true)}
           />
         </Modal>
       )}

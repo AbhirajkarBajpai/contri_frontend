@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./ExpenseForm.module.css";
 import { useSelector } from "react-redux";
 
-const ExpenseForm = ({ groupId, onCancel, members = [] }) => {
+const ExpenseForm = ({ groupId, onComplete, onCancel, members = [] }) => {
   const isUserLoggedIn = useSelector((state) => state.loggedInUser.value);
   const [expenseName, setExpenseName] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
@@ -77,6 +77,7 @@ const ExpenseForm = ({ groupId, onCancel, members = [] }) => {
       const data = await response.json();
       console.log("Expsense data:", data);
       alert("Expense created successfully!");
+      onComplete();
       onCancel();
     } catch (error) {
       console.error("Error fetching group data:", error);
