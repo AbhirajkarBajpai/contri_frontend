@@ -40,19 +40,23 @@ function CreateGroup(props) {
   }
 
   async function createGroup(grpData) {
-    const response = await fetch(
-      "http://localhost:5000/api/v1/group/createGroup",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body : JSON.stringify(grpData),
-        credentials: "include",
-      }
-    );
-    const data = await response.json();
-    console.log("group data", data);
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/v1/group/createGroup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(grpData),
+          credentials: "include",
+        }
+      );
+      const data = await response.json();
+      console.log("group data", data);
+    } catch (err) {
+      console.log("Error occured while Creating Group!", err);
+    }
     return;
   }
 
@@ -75,9 +79,10 @@ function CreateGroup(props) {
     };
 
     await createGroup(GrpData);
-    alert('group created succesfully');
+    alert("group created succesfully");
     setEnteredName("");
     setMembers([]);
+    props.onComplete();
     props.onCancel();
   }
 

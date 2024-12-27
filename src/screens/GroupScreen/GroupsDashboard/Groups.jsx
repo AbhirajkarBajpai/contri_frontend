@@ -3,7 +3,7 @@ import styles from "./Groups.module.css";
 import CreateGroup from "../../../components/GroupForm/CreateGroup";
 import Modal from "../../../components/Modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
-import { setGroups,setGroupData } from "../../../store/store";
+import { setGroups, setGroupData } from "../../../store/store";
 import { useNavigate } from "react-router-dom";
 
 const Groups = () => {
@@ -11,26 +11,37 @@ const Groups = () => {
   const navigate = useNavigate();
   const loggedInUser = useSelector((state) => state.loggedInUser.value);
   const [isCreating, setIsCreating] = useState(false);
+  const [isFetchAgain, setIsFetchAgain] = useState(false);
   const userGroups = useSelector((state) => state.userGroups.groups);
-  
+
+  async function fetchData() {
+    const response = await fetch(
+      "http://localhost:5000/api/v1/user/getUserGroups",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    console.log("fetched data", data);
+    dispatch(setGroups(data.groups));
+  }
+
   useEffect(() => {
-    async function fetchData() {
-      const response = await fetch(
-        "http://localhost:5000/api/v1/user/getUserGroups",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
-      const data = await response.json();
-      console.log("fetched data", data);
-      dispatch(setGroups(data.groups));
-    }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (isFetchAgain) {
+      setTimeout(() => {
+        fetchData();
+        setIsFetchAgain(false);
+      }, 1000);
+    }
+  }, [isFetchAgain]);
 
   async function deleteGroup(groupId) {
     const response = await fetch(
@@ -53,7 +64,10 @@ const Groups = () => {
     <div className={styles.container}>
       {isCreating && (
         <Modal>
-          <CreateGroup onCancel={() => setIsCreating(false)} />
+          <CreateGroup
+            onComplete={() => setIsFetchAgain(true)}
+            onCancel={() => setIsCreating(false)}
+          />
         </Modal>
       )}
       <header className={styles.header}>
@@ -87,14 +101,24 @@ const Groups = () => {
       ) : (
         <ul className={styles.groupList}>
           {userGroups.map((group, index) => (
-            <li key={index} className={styles.groupItem} onClick={() => { navigate(`/group/${group.id}`)}}>
+            <li
+              key={index}
+              className={styles.groupItem}
+              onClick={() => {
+                navigate(`/group/${group.id}`);
+              }}
+            >
               <div>
                 <h3 className={styles.groupName}>{group.name}</h3>
               </div>
               {group.createdBy === loggedInUser && (
                 <svg
                   className={styles.delGroup}
-                  onClick={() => deleteGroup(group.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteGroup(group.id);
+                    setIsFetchAgain(true);
+                  }}
                   viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
