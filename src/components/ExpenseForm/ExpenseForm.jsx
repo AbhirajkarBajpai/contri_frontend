@@ -61,7 +61,7 @@ const ExpenseForm = ({ groupId, onComplete, onCancel, members = [] }) => {
     console.log("data", body);
     try {
       const response = await fetch(
-        "http://localhost:5000/api/v1/expense/addExpense",
+        "https://contri-backend.vercel.app/api/v1/expense/addExpense",
         {
           method: "POST",
           headers: {

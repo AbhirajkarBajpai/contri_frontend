@@ -42,7 +42,7 @@ function CreateGroup(props) {
   async function createGroup(grpData) {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/v1/group/createGroup",
+        "https://contri-backend.vercel.app/api/v1/group/createGroup",
         {
           method: "POST",
           headers: {
