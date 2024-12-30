@@ -1,11 +1,13 @@
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { setUser, setDetails, setGroups } from "./store/store";
 import "./App.css";
 import SignupScreen from "./screens/SignupScreen/Signup";
 import LoginScreen from "./screens/LoginScreen/Login";
 import Main from "./mainPage";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setUser, setDetails, setGroups } from "./store/store";
 import Expenses from "./screens/GroupScreen/GroupExpenses/Expenses";
 
 function App() {
@@ -49,7 +51,44 @@ function App() {
   }, [isUserLoggedIn]);
 
   if (isloadingUser) {
-    return <>Loading...</>;
+    return (
+      <div style={{ padding: "6vh", boxSizing:'border-box', width: "100%" }}>
+        <div style={{ display: "flex", gap: ".56vw", alignItems: "center" }}>
+          <Skeleton
+            height={30}
+            width={`75vw`}
+            baseColor="rgba(37, 150, 190, 0.2)"
+            highlightColor="rgba(37, 150, 190, 0.1)"
+          />
+          <Skeleton
+            height={30}
+            width={`6.7vw`}
+            baseColor="rgba(37, 150, 190, 0.2)"
+            highlightColor="rgba(37, 150, 190, 0.1)"
+          />
+          <Skeleton
+            height={30}
+            width={`6.7vw`}
+            baseColor="rgba(37, 150, 190, 0.2)"
+            highlightColor="rgba(37, 150, 190, 0.1)"
+          />
+        </div>
+        <div style={{ margin: "50px 0" }}>
+          <Skeleton
+            height={30}
+            width={`90vw`}
+            baseColor="rgba(37, 150, 190, 0.2)"
+            highlightColor="rgba(37, 150, 190, 0.1)"
+          />
+        </div>
+        <Skeleton
+          height={120}
+          width={`90vw`}
+          baseColor="rgba(37, 150, 190, 0.2)"
+          highlightColor="rgba(59, 66, 81, 0.5)"
+        />
+      </div>
+    );
   }
 
   return (
