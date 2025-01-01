@@ -60,6 +60,65 @@ const Expenses = () => {
     }
   }, [fetchAgain]);
 
+  async function handleSplitResolveReq(payUID, recUID) {
+    const body = {
+      groupId: groupData.id,
+      payingUserId: payUID,
+      receivingUserId: recUID,
+    };
+    console.log(body);
+    if (loggedInUser === recUID) return handleSplitResolve(body);
+    try {
+      const response = await fetch(
+        "https://contri-backend.vercel.app/api/v1/expense/reqSettel",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log("data:", data);
+      alert("settle Req Sent!");
+      setFetchAgain(true);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("something went wrong!");
+    }
+  }
+
+  async function handleSplitResolve(body) {
+    try {
+      const response = await fetch(
+        "https://contri-backend.vercel.app/api/v1/expense/settel",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log("data:", data);
+      alert("settle completed!");
+      setFetchAgain(true);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("something went wrong!");
+    }
+  }
+
   return (
     <div className={styles.ExpensesPage}>
       {isCreatingExpense && (
@@ -145,27 +204,101 @@ const Expenses = () => {
               (debt) =>
                 debt.user1 !== debt.user2 &&
                 (debt.amount > 0 ? (
-                  <li key={debt._id}>
-                    {debt.user2 === loggedInUser
-                      ? "You"
-                      : userIdToName[debt.user2]}{" "}
-                    lends{" "}
-                    {debt.user1 === loggedInUser
-                      ? "You"
-                      : userIdToName[debt.user1]}
-                    : {Math.abs(debt.amount)}
-                  </li>
+                  <div className={styles.lendsDetail}>
+                    <li key={debt._id}>
+                      {debt.user2 === loggedInUser
+                        ? "You"
+                        : userIdToName[debt.user2]}{" "}
+                      lends{" "}
+                      {debt.user1 === loggedInUser
+                        ? "You"
+                        : userIdToName[debt.user1]}
+                      : {Math.abs(debt.amount)}
+                    </li>
+                    {debt.isSettled === "No" &&
+                      (debt.user1 === loggedInUser ||
+                        debt.user2 === loggedInUser) && (
+                        <div
+                          className={styles.lendsSettle}
+                          onClick={() =>
+                            handleSplitResolveReq(debt.user1, debt.user2)
+                          }
+                        >
+                          {" "}
+                          <span>Settle</span>{" "}
+                        </div>
+                      )}
+                    {debt.isSettled === "Yes" && (
+                      <div className={styles.lendsSettle}>
+                        <span>Settled</span>
+                      </div>
+                    )}
+                    {debt.isSettled === "Requested" && (
+                      <div
+                        className={styles.lendsSettle}
+                        onClick={() =>
+                          debt.user2 === loggedInUser
+                            ? handleSplitResolveReq(debt.user1, debt.user2)
+                            : null
+                        }
+                      >
+                        {debt.user1 === loggedInUser && (
+                          <span>settle requested</span>
+                        )}
+                        {debt.user2 === loggedInUser && (
+                          <span>confirm settle</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 ) : (
-                  <li key={debt._id}>
-                    {debt.user1 === loggedInUser
-                      ? "You"
-                      : userIdToName[debt.user1]}{" "}
-                    lends{" "}
-                    {debt.user2 === loggedInUser
-                      ? "You"
-                      : userIdToName[debt.user2]}
-                    : {Math.abs(debt.amount)}
-                  </li>
+                  <div className={styles.lendsDetail}>
+                    <li key={debt._id}>
+                      {debt.user1 === loggedInUser
+                        ? "You"
+                        : userIdToName[debt.user1]}{" "}
+                      lends{" "}
+                      {debt.user2 === loggedInUser
+                        ? "You"
+                        : userIdToName[debt.user2]}
+                      : {Math.abs(debt.amount)}
+                    </li>
+                    {debt.isSettled === "No" &&
+                      (debt.user1 === loggedInUser ||
+                        debt.user2 === loggedInUser) && (
+                        <div
+                          className={styles.lendsSettle}
+                          onClick={() =>
+                            handleSplitResolveReq(debt.user2, debt.user1)
+                          }
+                        >
+                          {" "}
+                          <span>Settle</span>
+                        </div>
+                      )}
+                    {debt.isSettled === "Yes" && (
+                      <div className={styles.lendsSettle}>
+                        <span>Settled</span>
+                      </div>
+                    )}
+                    {debt.isSettled === "Requested" && (
+                      <div
+                        className={styles.lendsSettle}
+                        onClick={() =>
+                          debt.user1 === loggedInUser
+                            ? handleSplitResolveReq(debt.user2, debt.user1)
+                            : null
+                        }
+                      >
+                        {debt.user2 === loggedInUser && (
+                          <span>settle requested</span>
+                        )}
+                        {debt.user1 === loggedInUser && (
+                          <span>confirm settle</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 ))
             )
           ) : (

@@ -97,6 +97,36 @@
     font-size: 2vh;
     margin-bottom: 0.5vh;
     padding-left: 1vw;
+    line-height: 185%;
+  }
+
+  .lendsDetail{
+    display: flex;
+    flex-direction: row;
+    gap: 4vw;
+    /* align-items: center; */
+  }
+
+  .lendsSettle{
+    width: 7vh;
+    height: 3vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2.5vh;
+    border: 1px solid var(--Accent-Accent--05-Accent-05, #33f5f5);
+    background: rgba(51, 245, 245, 0.3);
+  }
+  
+  .lendsSettle span {
+    color: var(--Light-Light--100, #fff);
+    text-align: center;
+    font-family: "Pilat Extended";
+    font-size: 1.15vh;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%; 
+    text-transform: uppercase;
   }
   
   /* Debts Section */
