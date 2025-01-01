@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Expenses.module.css";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import backIcon from "../../../assets/img/bkbtn.png";
 import ExpenseForm from "../../../components/ExpenseForm/ExpenseForm";
 import Modal from "../../../components/Modal/Modal";
 import ExpenseInfo from "../../../components/ExpenseInfo/ExpenseInfo";
@@ -9,6 +10,7 @@ import ExpenseInfo from "../../../components/ExpenseInfo/ExpenseInfo";
 const Expenses = () => {
   //   const groupData = useSelector((state) => state.groupData.groupData);
   const { id } = useParams();
+  const navigate = useNavigate();
   const [groupData, setGroupData] = useState(null);
   const [expenseId, setExpenseId] = useState("");
   const [isCreatingExpense, setIsCreatingExpense] = useState(false);
@@ -121,6 +123,11 @@ const Expenses = () => {
 
   return (
     <div className={styles.ExpensesPage}>
+      <img
+        className={styles.backbtn}
+        onClick={() => navigate("/")}
+        src={backIcon}
+      />
       {isCreatingExpense && (
         <Modal>
           <ExpenseForm

@@ -3,6 +3,12 @@
     padding: 8vh;
     min-height: 100vh;
 }
+.backbtn{
+  position: fixed;
+  top: 1.5rem;
+  left:1.5rem;
+  height: 4vh;
+}
 .grpName span{
     color: #56d4f7;
     font-weight: 700;
