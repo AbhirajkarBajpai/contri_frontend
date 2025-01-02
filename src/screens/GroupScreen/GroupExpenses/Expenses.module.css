@@ -1,191 +1,201 @@
-.ExpensesPage{
-    background-color: #000d1a;
-    padding: 8vh;
-    min-height: 100vh;
+.ExpensesPage {
+  background-color: #000d1a;
+  padding: 8vh;
+  min-height: 100vh;
 }
-.backbtn{
+.backbtn {
   position: fixed;
   top: 1.5rem;
-  left:1.5rem;
+  left: 1.5rem;
   height: 4vh;
 }
-.grpName span{
-    color: #56d4f7;
-    font-weight: 700;
-    font-size: 4vh;
+.grpName span {
+  color: #56d4f7;
+  font-weight: 700;
+  font-size: 4vh;
 }
-.addExpensebtn{
-    margin-top: 4vh;
-    height: 10vh;
-    transition: transform 0.25s ease;
+.addExpensebtn {
+  margin-top: 4vh;
+  height: 10vh;
+  transition: transform 0.25s ease;
 }
-.addExpensebtn:hover{
-    transform: scale(1.15);
+.addExpensebtn:hover {
+  transform: scale(1.15);
 }
-.expensesContn{
-    display: flex;
-    align-items: left;
-    justify-content: center;
-    flex-direction: column;
-    gap: 2vh;
-    margin: 5vh auto;
-}
-
-.expenseBox{
-    display: flex;
-    flex-direction: column;
-    /* align-items: center; */
-    justify-content: center;
-    max-width: 35rem;
-    max-height: 5rem;
-    border: none;
-    border-radius: 1vh;
-    padding: 1vh;
-    background-color: #002833;
+.expensesContn {
+  display: flex;
+  align-items: left;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2vh;
+  margin: 5vh auto;
 }
 
-.expenseInfo{
+.expense {
   display: flex;
   align-items: center;
-  gap:3vh;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 35rem;
+  max-height: 5rem;
+  border: none;
+  border-radius: 1vh;
+  padding: 1vh;
+  background-color: #002833;
 }
-.expenseAmount{
+
+.expenseBox {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+}
+
+.expenseInfo {
+  display: flex;
+  align-items: center;
+  gap: 3vh;
+}
+.expenseAmount {
   font-size: 2.25vh;
   font-weight: 500;
   color: aliceblue;
 }
 
-.expenseName{
-    color: #56d4f7;
-    font-size: 2.9vh;
-    font-weight: 600;
+.expenseName {
+  color: #56d4f7;
+  font-size: 2.9vh;
+  font-weight: 600;
 }
 
-.expensePayer{
-    display: flex;
-    align-items: center;
-    vertical-align: bottom;
-    flex-direction: row;
-    gap: 1vw;
-    margin-top: 0.6vh;
+.expensePayer {
+  display: flex;
+  align-items: center;
+  vertical-align: bottom;
+  flex-direction: row;
+  gap: 1vw;
+  margin-top: 0.6vh;
 }
 
-.expensePayer span:nth-child(1){
-    font-size: 2vh;
-    font-weight: 500;
-    color: rgb(207, 210, 99);
+.expensePayer span:nth-child(1) {
+  font-size: 2vh;
+  font-weight: 500;
+  color: rgb(207, 210, 99);
 }
-.expensePayer span:nth-child(2){
-    font-size: 1.7vh;
-    font-weight: 500;
-    color: rgb(25, 93, 95);
+.expensePayer span:nth-child(2) {
+  font-size: 1.7vh;
+  font-weight: 500;
+  color: rgb(25, 93, 95);
 }
-  
-  /* Group Members Section */
+
+.delExpense {
+  height: 4vh;
+}
+
+/* Group Members Section */
+.grpMembers h2,
+.debtsSection h2 {
+  color: #56d4f7;
+  font-size: 2.75vh;
+  text-align: left;
+  margin: 2vh 0 1vh;
+}
+
+.grpMembers ul,
+.debtsSection ul {
+  list-style: none;
+  padding: 0;
+  color: rgb(207, 210, 99);
+  text-align: left;
+}
+
+.grpMembers li,
+.debtsSection li {
+  font-size: 2vh;
+  margin-bottom: 0.5vh;
+  padding-left: 1vw;
+  line-height: 185%;
+}
+
+.lendsDetail {
+  display: flex;
+  flex-direction: row;
+  gap: 4vw;
+  /* align-items: center; */
+}
+
+.lendsSettle {
+  width: 7vh;
+  height: 3vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2.5vh;
+  border: 1px solid var(--Accent-Accent--05-Accent-05, #33f5f5);
+  background: rgba(51, 245, 245, 0.3);
+}
+
+.lendsSettle span {
+  color: var(--Light-Light--100, #fff);
+  text-align: center;
+  font-family: "Pilat Extended";
+  font-size: 1.15vh;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+  text-transform: uppercase;
+}
+
+/* Debts Section */
+.debtsSection li {
+  color: rgb(241, 87, 87);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .grpName span {
+    font-size: 2.5vh;
+  }
+
+  .expenseBox {
+    padding: 1vh;
+  }
+
+  .expenseName {
+    font-size: 2.2vh;
+  }
+
+  .expensePayer span {
+    font-size: 1.5vh;
+  }
+
   .grpMembers h2,
   .debtsSection h2 {
-    color: #56d4f7;
-    font-size: 2.75vh;
-    text-align: left;
-    margin: 2vh 0 1vh;
+    font-size: 2vh;
   }
-  
-  .grpMembers ul,
-  .debtsSection ul {
-    list-style: none;
-    padding: 0;
-    color: rgb(207, 210, 99);
-    text-align: left;
-  }
-  
+
   .grpMembers li,
   .debtsSection li {
-    font-size: 2vh;
-    margin-bottom: 0.5vh;
-    padding-left: 1vw;
-    line-height: 185%;
+    font-size: 1.8vh;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grpName span {
+    font-size: 4vh;
   }
 
-  .lendsDetail{
-    display: flex;
-    flex-direction: row;
-    gap: 4vw;
-    /* align-items: center; */
+  .addExpensebtn {
+    height: 8vh;
   }
 
-  .lendsSettle{
-    width: 7vh;
-    height: 3vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 2.5vh;
-    border: 1px solid var(--Accent-Accent--05-Accent-05, #33f5f5);
-    background: rgba(51, 245, 245, 0.3);
+  .expenseBox {
+    padding: 2vh;
+    max-width: 40rem;
   }
-  
-  .lendsSettle span {
-    color: var(--Light-Light--100, #fff);
-    text-align: center;
-    font-family: "Pilat Extended";
-    font-size: 1.15vh;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 100%; 
-    text-transform: uppercase;
+
+  .grpMembers h2,
+  .debtsSection h2 {
+    font-size: 2.6vh;
   }
-  
-  /* Debts Section */
-  .debtsSection li {
-    color: rgb(241, 87, 87);
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .grpName span {
-      font-size: 2.5vh;
-    }
-  
-    .expenseBox {
-      padding: 1vh;
-    }
-  
-    .expenseName {
-      font-size: 2.2vh;
-    }
-  
-    .expensePayer span {
-      font-size: 1.5vh;
-    }
-  
-    .grpMembers h2,
-    .debtsSection h2 {
-      font-size: 2vh;
-    }
-  
-    .grpMembers li,
-    .debtsSection li {
-      font-size: 1.8vh;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .grpName span {
-      font-size: 4vh;
-    }
-  
-    .addExpensebtn {
-      height: 8vh;
-    }
-  
-    .expenseBox {
-      padding: 2vh;
-      max-width: 40rem;
-    }
-  
-    .grpMembers h2,
-    .debtsSection h2 {
-      font-size: 2.6vh;
-    }
-  }
-  
+}
