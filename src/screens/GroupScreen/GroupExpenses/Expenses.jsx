@@ -6,6 +6,8 @@ import backIcon from "../../../assets/img/bkbtn.png";
 import ExpenseForm from "../../../components/ExpenseForm/ExpenseForm";
 import Modal from "../../../components/Modal/Modal";
 import ExpenseInfo from "../../../components/ExpenseInfo/ExpenseInfo";
+import ConfirmationBox from "../../../components/ConfirmationBox/ConfirmationBox";
+import { current } from "@reduxjs/toolkit";
 
 const Expenses = () => {
   //   const groupData = useSelector((state) => state.groupData.groupData);
@@ -15,6 +17,9 @@ const Expenses = () => {
   const [expenseId, setExpenseId] = useState("");
   const [isCreatingExpense, setIsCreatingExpense] = useState(false);
   const [isOpenExpenseInfo, setIsOpenExpenseInfo] = useState(false);
+  const [isOpenConf, setIsOpenConf] = useState(false);
+  const [currFxn, setCurrFxn] = useState(() => console.log(10));
+  const [confMsg, setConfMsg] = useState("Hi");
   const [fetchAgain, setFetchAgain] = useState(false);
   const [userIdToName, setUserIdToName] = useState({});
   const loggedInUser = useSelector((state) => state.loggedInUser.value);
@@ -62,6 +67,12 @@ const Expenses = () => {
     }
   }, [fetchAgain]);
 
+  function handleOnExpenseDelete(id) {
+    setConfMsg("Are You Sure Want to delete this Expense?");
+    setCurrFxn(() => () => handleDeleteExpense(id));
+    setIsOpenConf(true);
+  }
+
   async function handleSplitResolveReq(payUID, recUID) {
     const body = {
       groupId: groupData.id,
@@ -89,9 +100,11 @@ const Expenses = () => {
       console.log("data:", data);
       alert("settle Req Sent!");
       setFetchAgain(true);
+      setIsOpenConf(false);
     } catch (error) {
       console.error("Error:", error);
       alert("something went wrong!");
+      setIsOpenConf(false);
     }
   }
 
@@ -115,17 +128,18 @@ const Expenses = () => {
       console.log("data:", data);
       alert("settle completed!");
       setFetchAgain(true);
+      setIsOpenConf(false);
     } catch (error) {
       console.error("Error:", error);
       alert("something went wrong!");
+      setIsOpenConf(false);
     }
   }
 
-
-  async function handleDeleteExpense(expenseId){
-    try { 
+  async function handleDeleteExpense(id) {
+    try {
       const response = await fetch(
-        `https://contri-backend.vercel.app/api/v1/expense/delExpense/${expenseId}`,
+        `https://contri-backend.vercel.app/api/v1/expense/delExpense/${id}`,
         {
           method: "POST",
           headers: {
@@ -141,9 +155,11 @@ const Expenses = () => {
       console.log("data:", data);
       alert("Expense Deleted!");
       setFetchAgain(true);
+      setIsOpenConf(false);
     } catch (error) {
       console.error("Error:", error);
       alert("something went wrong!");
+      setIsOpenConf(false);
     }
   }
 
@@ -154,6 +170,13 @@ const Expenses = () => {
         onClick={() => navigate("/")}
         src={backIcon}
       />
+      {isOpenConf && (
+        <ConfirmationBox
+          message={confMsg}
+          onNo={() => setIsOpenConf(false)}
+          onYes={currFxn}
+        />
+      )}
       {isCreatingExpense && (
         <Modal>
           <ExpenseForm
@@ -203,34 +226,36 @@ const Expenses = () => {
         {groupData?.expenses?.length > 0 ? (
           groupData.expenses?.map((expense) => (
             <div className={styles.expense}>
-            <div
-              onClick={() => {
-                setExpenseId(expense._id);
-                setIsOpenExpenseInfo(true);
-              }}
-              className={styles.expenseBox}
-            >
-              <div className={styles.expenseInfo}>
-                <span className={styles.expenseName}>
-                  {expense.description}
-                </span>
-                <span className={styles.expenseAmount}>({expense.amount})</span>
-              </div>
-              <div className={styles.expensePayer}>
-                <span>Paid By :</span>
-                <span>
-                  {expense.createdBy === loggedInUser
-                    ? "You"
-                    : userIdToName[expense.createdBy]}
-                </span>
-              </div>
+              <div
+                onClick={() => {
+                  setExpenseId(expense._id);
+                  setIsOpenExpenseInfo(true);
+                }}
+                className={styles.expenseBox}
+              >
+                <div className={styles.expenseInfo}>
+                  <span className={styles.expenseName}>
+                    {expense.description}
+                  </span>
+                  <span className={styles.expenseAmount}>
+                    ({expense.amount})
+                  </span>
+                </div>
+                <div className={styles.expensePayer}>
+                  <span>Paid By :</span>
+                  <span>
+                    {expense.createdBy === loggedInUser
+                      ? "You"
+                      : userIdToName[expense.createdBy]}
+                  </span>
+                </div>
               </div>
               {expense.createdBy === loggedInUser && (
                 <svg
                   className={styles.delExpense}
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleDeleteExpense(expense._id);
+                    handleOnExpenseDelete(expense._id);
                   }}
                   viewBox="0 0 24 24"
                   fill="none"
@@ -285,9 +310,16 @@ const Expenses = () => {
                         debt.user2 === loggedInUser) && (
                         <div
                           className={styles.lendsSettle}
-                          onClick={() =>
-                            handleSplitResolveReq(debt.user1, debt.user2)
-                          }
+                          onClick={() => {
+                            setCurrFxn(
+                              () => () =>
+                                handleSplitResolveReq(debt.user1, debt.user2)
+                            );
+                            debt.user1 === loggedInUser
+                              ? setConfMsg("Have You Paid")
+                              : setConfMsg("Are You Sure to settle!");
+                            setIsOpenConf(true);
+                          }}
                         >
                           {" "}
                           <span>Settle</span>{" "}
@@ -301,11 +333,16 @@ const Expenses = () => {
                     {debt.isSettled === "Requested" && (
                       <div
                         className={styles.lendsSettle}
-                        onClick={() =>
-                          debt.user2 === loggedInUser
-                            ? handleSplitResolveReq(debt.user1, debt.user2)
-                            : null
-                        }
+                        onClick={() => {
+                          if (debt.user2 === loggedInUser) {
+                            setCurrFxn(
+                              () => () =>
+                                handleSplitResolveReq(debt.user1, debt.user2)
+                            );
+                            setConfMsg("Are You Sure to confirm settle!");
+                            setIsOpenConf(true);
+                          }
+                        }}
                       >
                         {debt.user1 === loggedInUser && (
                           <span>settle requested</span>
@@ -333,9 +370,16 @@ const Expenses = () => {
                         debt.user2 === loggedInUser) && (
                         <div
                           className={styles.lendsSettle}
-                          onClick={() =>
-                            handleSplitResolveReq(debt.user2, debt.user1)
-                          }
+                          onClick={() => {
+                            setCurrFxn(
+                              () => () =>
+                                handleSplitResolveReq(debt.user2, debt.user1)
+                            );
+                            debt.user2 === loggedInUser
+                              ? setConfMsg("Have You Paid")
+                              : setConfMsg("Are You Sure to settle!");
+                            setIsOpenConf(true);
+                          }}
                         >
                           {" "}
                           <span>Settle</span>
@@ -349,11 +393,16 @@ const Expenses = () => {
                     {debt.isSettled === "Requested" && (
                       <div
                         className={styles.lendsSettle}
-                        onClick={() =>
-                          debt.user1 === loggedInUser
-                            ? handleSplitResolveReq(debt.user2, debt.user1)
-                            : null
-                        }
+                        onClick={() => {
+                          if (debt.user1 === loggedInUser) {
+                            setCurrFxn(
+                              () => () =>
+                                handleSplitResolveReq(debt.user2, debt.user1)
+                            );
+                            setConfMsg("Are You Sure to confirm settle!");
+                            setIsOpenConf(true);
+                          }
+                        }}
                       >
                         {debt.user2 === loggedInUser && (
                           <span>settle requested</span>
