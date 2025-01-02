@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import styles from "./Navbar.module.css";
 import { useNavigate } from "react-router-dom";
+import ConfirmationBox from "../ConfirmationBox/ConfirmationBox";
 
 function Navbar({ active, setActive }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [openConf, setOpenConf] = useState(false);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -35,6 +37,16 @@ function Navbar({ active, setActive }) {
 
   return (
     <nav className={styles.navbar}>
+      {openConf && (
+        <ConfirmationBox
+          message={"Are you sure want to logout!"}
+          onNo={() => setOpenConf(false)}
+          onYes={() => {
+            logoutHandler();
+            setMenuOpen(false);
+          }}
+        />
+      )}
       <div className={styles.burger} onClick={toggleMenu}>
         <div className={styles.line}></div>
         <div className={styles.line}></div>
@@ -45,13 +57,7 @@ function Navbar({ active, setActive }) {
           menuOpen ? styles.navLinksMobile : ""
         }`}
       >
-        <li
-          className={styles.navItem}
-          onClick={() => {
-            logoutHandler();
-            setMenuOpen(false);
-          }}
-        >
+        <li className={styles.navItem} onClick={() => setOpenConf(true)}>
           Logout
         </li>
         <li

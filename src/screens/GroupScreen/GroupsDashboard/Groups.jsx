@@ -5,6 +5,7 @@ import Modal from "../../../components/Modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { setGroups, setGroupData } from "../../../store/store";
 import { useNavigate } from "react-router-dom";
+import ConfirmationBox from "../../../components/ConfirmationBox/ConfirmationBox";
 
 const Groups = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,8 @@ const Groups = () => {
   const loggedInUser = useSelector((state) => state.loggedInUser.value);
   const [isCreating, setIsCreating] = useState(false);
   const [isFetchAgain, setIsFetchAgain] = useState(false);
+  const [isOpenConf, setIsOpenConf] = useState(false);
+  const [todelGroupId, setTodelGroupId] = useState(false);
   const userGroups = useSelector((state) => state.userGroups.groups);
 
   async function fetchData() {
@@ -57,11 +60,23 @@ const Groups = () => {
     const data = await response.json();
     console.log("group data", data);
     dispatch(setGroupData(data));
+    alert('group deleted!');
     return;
   }
 
   return (
     <div className={styles.container}>
+      {isOpenConf && (
+        <ConfirmationBox
+          message={"Are you sure want to delete this group!"}
+          onNo={() => setIsOpenConf(false)}
+          onYes={async () => {
+            await deleteGroup(todelGroupId);
+            setIsFetchAgain(true);
+            setIsOpenConf(false);
+          }}
+        />
+      )}
       {isCreating && (
         <Modal>
           <CreateGroup
@@ -116,8 +131,8 @@ const Groups = () => {
                   className={styles.delGroup}
                   onClick={(e) => {
                     e.stopPropagation();
-                    deleteGroup(group.id);
-                    setIsFetchAgain(true);
+                    setIsOpenConf(true);
+                    setTodelGroupId(group.id);
                   }}
                   viewBox="0 0 24 24"
                   fill="none"

@@ -1,0 +1,61 @@
+.confirmationBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 25vh;
+    background-color: rgb(201, 215, 215);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+    max-width: 90%;
+  }
+  
+  .confMsg {
+    font-size: 2.5vh;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 12%;
+    color: #333;
+  }
+  
+  .yesNo {
+    display: flex;
+    gap: 4vh;
+  }
+  
+  .yesNo span {
+    font-size: 2vh;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+  
+  .yesNo span:hover {
+    border: 1px solid #007bff;
+    background-color: #f0f8ff;
+    color: #007bff;
+  }
+  
+  .yesNo span:first-child {
+    color: #28a745;
+  }
+  
+  .yesNo span:first-child:hover {
+    border: 1px solid #28a745;
+    background-color: #e6f4e8;
+  }
+  
+  .yesNo span:last-child {
+    color: #dc3545;
+  }
+  
+  .yesNo span:last-child:hover {
+    border: 1px solid #dc3545;
+    background-color: #fce4e6;
+  }
+  
