@@ -7,7 +7,7 @@ import ExpenseForm from "../../../components/ExpenseForm/ExpenseForm";
 import Modal from "../../../components/Modal/Modal";
 import ExpenseInfo from "../../../components/ExpenseInfo/ExpenseInfo";
 import ConfirmationBox from "../../../components/ConfirmationBox/ConfirmationBox";
-import { current } from "@reduxjs/toolkit";
+import { showAlert } from "../../../components/alert";
 
 const Expenses = () => {
   //   const groupData = useSelector((state) => state.groupData.groupData);
@@ -98,12 +98,12 @@ const Expenses = () => {
       }
       const data = await response.json();
       console.log("data:", data);
-      alert("settle Req Sent!");
+      showAlert('success', "settle Req Sent!");
       setFetchAgain(true);
       setIsOpenConf(false);
     } catch (error) {
       console.error("Error:", error);
-      alert("something went wrong!");
+      showAlert('error', "Something Went Wrong!");
       setIsOpenConf(false);
     }
   }
@@ -126,12 +126,12 @@ const Expenses = () => {
       }
       const data = await response.json();
       console.log("data:", data);
-      alert("settle completed!");
+      showAlert('success', "settle completed!");
       setFetchAgain(true);
       setIsOpenConf(false);
     } catch (error) {
       console.error("Error:", error);
-      alert("something went wrong!");
+      showAlert('error', "Something Went Wrong!");
       setIsOpenConf(false);
     }
   }
@@ -153,12 +153,12 @@ const Expenses = () => {
       }
       const data = await response.json();
       console.log("data:", data);
-      alert("Expense Deleted!");
+      showAlert('success', "Expense Deleted!");
       setFetchAgain(true);
       setIsOpenConf(false);
     } catch (error) {
       console.error("Error:", error);
-      alert("something went wrong!");
+      showAlert('error', "Something Went Wrong!");
       setIsOpenConf(false);
     }
   }

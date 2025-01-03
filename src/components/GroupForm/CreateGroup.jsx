@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./CreateGroup.css";
+import { showAlert } from "../alert";
 
 function CreateGroup(props) {
   const [enteredName, setEnteredName] = useState("");
@@ -23,7 +24,7 @@ function CreateGroup(props) {
     event.preventDefault();
 
     if (!memberName || !memberPhone) {
-      alert("Please enter both member name and phone number");
+      showAlert('error', "Please enter both member name and phone number");
       return;
     }
 
@@ -64,11 +65,11 @@ function CreateGroup(props) {
     event.preventDefault();
 
     if (!enteredName.trim()) {
-      alert("Please enter a group name");
+      showAlert('error', "Please enter a group name");
       return;
     }
     if (members.length === 0) {
-      alert("Please add at least one member");
+      showAlert('error', "Please add at least one member");
       return;
     }
 
@@ -79,7 +80,7 @@ function CreateGroup(props) {
     };
 
     await createGroup(GrpData);
-    alert("group created succesfully");
+    showAlert('success', "group created succesfully");
     setEnteredName("");
     setMembers([]);
     props.onComplete();

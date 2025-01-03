@@ -3,6 +3,7 @@ import styles from "./Login.module.css";
 import { setDetails, setUser, setGroups } from "../../store/store";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { showAlert } from "../../components/alert";
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -32,11 +33,12 @@ const LoginScreen = () => {
           navigate("/");
       } else {
         const errorData = await response.json();
-        alert(errorData.message);
+        showAlert('error', errorData.message);
         console.log("login failed:", errorData);
       }
     } catch (error) {
       console.error("Error occurred during login:", error);
+      showAlert('error', "Something Went Wrong!");
     }
   };
 

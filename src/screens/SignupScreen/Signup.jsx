@@ -3,6 +3,7 @@ import "./Signup.css";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUser, setDetails, setGroups } from "../../store/store";
+import { showAlert } from "../../components/alert";
 
 const SignupScreen = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const SignupScreen = () => {
   const submitSignupFormHandler = async (e) => {
     e.preventDefault();
     if (enteredPassword.length < 8) {
-      alert("password can't be less than 8 characters!");
+      showAlert('error', "password can't be less than 8 characters!");
       return;
     }
     const userData = {
@@ -46,11 +47,12 @@ const SignupScreen = () => {
         }, 100);
       } else {
         const errorData = await response.json();
-        alert(errorData.message);
+        showAlert('error', errorData.message);
         console.error("Signup failed:", errorData);
       }
     } catch (error) {
       console.error("Error occurred during signup:", error);
+      showAlert('error', "Something Went Wrong!");
     }
     setEnteredEmail("");
     setEnteredName("");

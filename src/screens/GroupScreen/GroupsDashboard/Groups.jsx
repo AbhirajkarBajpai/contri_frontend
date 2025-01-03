@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setGroups, setGroupData } from "../../../store/store";
 import { useNavigate } from "react-router-dom";
 import ConfirmationBox from "../../../components/ConfirmationBox/ConfirmationBox";
+import { showAlert } from "../../../components/alert";
 
 const Groups = () => {
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ const Groups = () => {
     const data = await response.json();
     console.log("group data", data);
     dispatch(setGroupData(data));
-    alert('group deleted!');
+    showAlert('error', 'group deleted!');
     return;
   }
 

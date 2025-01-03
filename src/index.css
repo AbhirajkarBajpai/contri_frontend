@@ -14,3 +14,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.alertG5 {
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  z-index: 99999;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 200;
+  text-align: center;
+  border-radius: 1rem;
+  padding: 1rem 1rem;
+  -webkit-box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+}
+
+.alertG5--error{
+  background-color: #9b475b;
+}
+.alertG5--success{
+  background-color: rgba(94, 203, 67, 0.3);
+}
