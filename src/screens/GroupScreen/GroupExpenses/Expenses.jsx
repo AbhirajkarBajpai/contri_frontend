@@ -8,6 +8,7 @@ import Modal from "../../../components/Modal/Modal";
 import ExpenseInfo from "../../../components/ExpenseInfo/ExpenseInfo";
 import ConfirmationBox from "../../../components/ConfirmationBox/ConfirmationBox";
 import { showAlert } from "../../../components/alert";
+import Pagination from "../../../components/Pagination/Pagination";
 
 const Expenses = () => {
   //   const groupData = useSelector((state) => state.groupData.groupData);
@@ -23,11 +24,13 @@ const Expenses = () => {
   const [fetchAgain, setFetchAgain] = useState(false);
   const [userIdToName, setUserIdToName] = useState({});
   const loggedInUser = useSelector((state) => state.loggedInUser.value);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const getGroup = async (groupId) => {
     try {
       const response = await fetch(
-        `https://contri-backend.vercel.app/api/v1/group/groupDetail/${groupId}`,
+        `https://contri-backend.vercel.app/api/v1/group/groupDetail/${groupId}/${currentPage}`,
         {
           method: "GET",
           headers: {
@@ -42,6 +45,7 @@ const Expenses = () => {
       const data = await response.json();
       console.log("Group data:", data);
       setGroupData(data.group);
+      setTotalPages(data.pagination.totalPages);
       const map = data.group.members.reduce((acc, member) => {
         acc[member._id] = member.name;
         return acc;
@@ -56,7 +60,7 @@ const Expenses = () => {
     if (id) {
       getGroup(id);
     }
-  }, [id]);
+  }, [id, currentPage]);
 
   useEffect(() => {
     if (fetchAgain) {
@@ -98,12 +102,12 @@ const Expenses = () => {
       }
       const data = await response.json();
       console.log("data:", data);
-      showAlert('success', "settle Req Sent!");
+      showAlert("success", "settle Req Sent!");
       setFetchAgain(true);
       setIsOpenConf(false);
     } catch (error) {
       console.error("Error:", error);
-      showAlert('error', "Something Went Wrong!");
+      showAlert("error", "Something Went Wrong!");
       setIsOpenConf(false);
     }
   }
@@ -126,12 +130,12 @@ const Expenses = () => {
       }
       const data = await response.json();
       console.log("data:", data);
-      showAlert('success', "settle completed!");
+      showAlert("success", "settle completed!");
       setFetchAgain(true);
       setIsOpenConf(false);
     } catch (error) {
       console.error("Error:", error);
-      showAlert('error', "Something Went Wrong!");
+      showAlert("error", "Something Went Wrong!");
       setIsOpenConf(false);
     }
   }
@@ -153,12 +157,12 @@ const Expenses = () => {
       }
       const data = await response.json();
       console.log("data:", data);
-      showAlert('success', "Expense Deleted!");
+      showAlert("success", "Expense Deleted!");
       setFetchAgain(true);
       setIsOpenConf(false);
     } catch (error) {
       console.error("Error:", error);
-      showAlert('error', "Something Went Wrong!");
+      showAlert("error", "Something Went Wrong!");
       setIsOpenConf(false);
     }
   }
@@ -224,64 +228,73 @@ const Expenses = () => {
       </svg>
       <div className={styles.expensesContn}>
         {groupData?.expenses?.length > 0 ? (
-          groupData.expenses?.map((expense) => (
-            <div className={styles.expense}>
-              <div
-                onClick={() => {
-                  setExpenseId(expense._id);
-                  setIsOpenExpenseInfo(true);
-                }}
-                className={styles.expenseBox}
-              >
-                <div className={styles.expenseInfo}>
-                  <span className={styles.expenseName}>
-                    {expense.description}
-                  </span>
-                  <span className={styles.expenseAmount}>
-                    ({expense.amount})
-                  </span>
-                </div>
-                <div className={styles.expensePayer}>
-                  <span>Paid By :</span>
-                  <span>
-                    {expense.createdBy === loggedInUser
-                      ? "You"
-                      : userIdToName[expense.createdBy]}
-                  </span>
-                </div>
-              </div>
-              {expense.createdBy === loggedInUser && (
-                <svg
-                  className={styles.delExpense}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleOnExpenseDelete(expense._id);
+          <>
+            {groupData.expenses?.map((expense) => (
+              <div className={styles.expense}>
+                <div
+                  onClick={() => {
+                    setExpenseId(expense._id);
+                    setIsOpenExpenseInfo(true);
                   }}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  stroke="#fff"
+                  className={styles.expenseBox}
                 >
-                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                  <g
-                    id="SVGRepo_tracerCarrier"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  ></g>
-                  <g id="SVGRepo_iconCarrier">
-                    {" "}
-                    <path
-                      d="M6 7V18C6 19.1046 6.89543 20 8 20H16C17.1046 20 18 19.1046 18 18V7M6 7H5M6 7H8M18 7H19M18 7H16M10 11V16M14 11V16M8 7V5C8 3.89543 8.89543 3 10 3H14C15.1046 3 16 3.89543 16 5V7M8 7H16"
-                      stroke="#56d4f7"
-                      stroke-width="2"
+                  <div className={styles.expenseInfo}>
+                    <span className={styles.expenseName}>
+                      {expense.description.length > 16
+                        ? `${expense.description.slice(0, 15)}...`
+                        : expense.description}
+                    </span>
+                    <span className={styles.expenseAmount}>
+                      ({expense.amount})
+                    </span>
+                  </div>
+                  <div className={styles.expensePayer}>
+                    <span>Paid By :</span>
+                    <span>
+                      {expense.createdBy === loggedInUser
+                        ? "You"
+                        : userIdToName[expense.createdBy]}
+                    </span>
+                  </div>
+                </div>
+                {expense.createdBy === loggedInUser && (
+                  <svg
+                    className={styles.delExpense}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleOnExpenseDelete(expense._id);
+                    }}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    stroke="#fff"
+                  >
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g
+                      id="SVGRepo_tracerCarrier"
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                    ></path>{" "}
-                  </g>
-                </svg>
-              )}
-            </div>
-          ))
+                    ></g>
+                    <g id="SVGRepo_iconCarrier">
+                      {" "}
+                      <path
+                        d="M6 7V18C6 19.1046 6.89543 20 8 20H16C17.1046 20 18 19.1046 18 18V7M6 7H5M6 7H8M18 7H19M18 7H16M10 11V16M14 11V16M8 7V5C8 3.89543 8.89543 3 10 3H14C15.1046 3 16 3.89543 16 5V7M8 7H16"
+                        stroke="#56d4f7"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>{" "}
+                    </g>
+                  </svg>
+                )}
+              </div>
+            ))}
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />{" "}
+          </>
         ) : (
           <p style={{ color: "white" }}>No Expense Found!</p>
         )}

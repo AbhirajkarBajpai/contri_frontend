@@ -153,6 +153,12 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .ExpensesPage{
+    padding: 5vw;
+  }
+  .grpName{
+    margin-top: 5vh;
+  }
   .grpName span {
     font-size: 2.5vh;
   }
