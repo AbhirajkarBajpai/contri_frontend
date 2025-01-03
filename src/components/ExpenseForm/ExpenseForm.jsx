@@ -29,9 +29,6 @@ const ExpenseForm = ({ groupId, onComplete, onCancel, members = [] }) => {
   };
 
   const handleManualAmountChange = (member, amount) => {
-    if (amount === "") {
-      return;
-    }
     setManualAmounts((prev) => ({ ...prev, [member]: amount }));
     if (!amount) {
       setIncludeInSplit((prev) => ({ ...prev, [member]: true }));
