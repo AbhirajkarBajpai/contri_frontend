@@ -4,12 +4,12 @@
     align-items: center;
     justify-content: center;
     height: 25vh;
+    box-sizing: border-box;
+    padding: 2vw;
     background-color: rgb(201, 215, 215);
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    min-width: 300px;
-    max-width: 90%;
   }
   
   .confMsg {
@@ -57,5 +57,14 @@
   .yesNo span:last-child:hover {
     border: 1px solid #dc3545;
     background-color: #fce4e6;
+  }
+
+  @media (max-width:500px) {
+    .confirmationBox{
+      width: 70vw;
+      box-sizing: border-box;
+      padding: 2vw;
+      height: 24vh;
+    }
   }
   
