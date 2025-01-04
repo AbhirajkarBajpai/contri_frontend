@@ -230,14 +230,14 @@ const Expenses = () => {
         {groupData?.expenses?.length > 0 ? (
           <>
             {groupData.expenses?.map((expense) => (
-              <div className={styles.expense}>
-                <div
-                  onClick={() => {
-                    setExpenseId(expense._id);
-                    setIsOpenExpenseInfo(true);
-                  }}
-                  className={styles.expenseBox}
-                >
+              <div
+                className={styles.expense}
+                onClick={() => {
+                  setExpenseId(expense._id);
+                  setIsOpenExpenseInfo(true);
+                }}
+              >
+                <div className={styles.expenseBox}>
                   <div className={styles.expenseInfo}>
                     <span className={styles.expenseName}>
                       {expense.description.length > 16
