@@ -46,6 +46,7 @@ const Expenses = () => {
       console.log("Group data:", data);
       setGroupData(data.group);
       setTotalPages(data.pagination.totalPages);
+      setCurrentPage(data.pagination.currentPage);
       const map = data.group.members.reduce((acc, member) => {
         acc[member._id] = member.name;
         return acc;
