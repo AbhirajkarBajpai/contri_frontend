@@ -434,15 +434,15 @@ const Expenses = () => {
           )}
         </ul>
       </div>
-      <div className={styles.grpMembers}>
+      <div className={styles.grpMemberContn}>
         <h2>Group Members</h2>
-        <ul>
+        <div className={styles.grpMembers}>
           {groupData?.members.map((member, i) => (
-            <li key={i}>
+            <span key={i}>
               {member?._id === loggedInUser ? "You" : member?.name}
-            </li>
+            </span>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );

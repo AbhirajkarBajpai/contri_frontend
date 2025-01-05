@@ -93,7 +93,7 @@
 }
 
 /* Group Members Section */
-.grpMembers h2,
+.grpMemberContn h2,
 .debtsSection h2 {
   color: #56d4f7;
   font-size: 2.75vh;
@@ -101,7 +101,6 @@
   margin: 2vh 0 1vh;
 }
 
-.grpMembers ul,
 .debtsSection ul {
   list-style: none;
   padding: 0;
@@ -109,7 +108,6 @@
   text-align: left;
 }
 
-.grpMembers li,
 .debtsSection li {
   font-size: 2vh;
   margin-bottom: 0.5vh;
@@ -151,12 +149,31 @@
   color: rgb(241, 87, 87);
 }
 
+.grpMembers {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 1vh;
+}
+.grpMembers span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4vh;
+  padding: 1vh;
+  box-sizing: border-box;
+  border-radius: 999px;
+  outline: none;
+  border: 1px solid var(--Accent-Accent--05-Accent-05, #33f5f5);
+  color: #f2e2e2;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
-  .ExpensesPage{
+  .ExpensesPage {
     padding: 5vw;
   }
-  .grpName{
+  .grpName {
     margin-top: 5vh;
   }
   .grpName span {
@@ -175,12 +192,11 @@
     font-size: 1.5vh;
   }
 
-  .grpMembers h2,
+  .grpMemberContn h2,
   .debtsSection h2 {
     font-size: 2vh;
   }
 
-  .grpMembers li,
   .debtsSection li {
     font-size: 1.8vh;
   }
@@ -200,7 +216,7 @@
     max-width: 40rem;
   }
 
-  .grpMembers h2,
+  .grpMemberContn h2,
   .debtsSection h2 {
     font-size: 2.6vh;
   }
