@@ -1,0 +1,29 @@
+
+@font-face {
+    font-family: 'Gilroy Bold';
+    src: url('../GILROY/Radomir\ Tinkov\ -\ Gilroy-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Gilroy';
+    src: url('../GILROY/Radomir\ Tinkov\ -\ Gilroy-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Gilroy Medium';
+    src: url('../GILROY/Radomir\ Tinkov\ -\ Gilroy-Medium.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'GilroyExtraBold';
+    src: url('../GILROY/Radomir\ Tinkov\ -\ Gilroy-ExtraBold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Saira';
+    src: url('../Saira-Black.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Saira SemiCondense Medium';
+    src: url('../SairaSemiCondensed-Medium.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Saira SemiCondense Bold';
+    src: url('../SairaSemiCondensed-Bold.ttf') format('truetype');
+}
