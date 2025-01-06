@@ -11,6 +11,7 @@
 }
 .grpName span {
   color: #56d4f7;
+  font-family: 'Gilroy Bold';
   font-weight: 700;
   font-size: 4vh;
 }
@@ -110,6 +111,7 @@
 
 .debtsSection li {
   font-size: 2vh;
+  font-family: 'Gilroy Medium';
   margin-bottom: 0.5vh;
   padding-left: 1vw;
   line-height: 185%;
@@ -162,6 +164,7 @@
   justify-content: center;
   height: 4vh;
   padding: 1vh;
+  font-family: 'Gilroy Medium';
   box-sizing: border-box;
   border-radius: 999px;
   outline: none;
