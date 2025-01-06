@@ -123,7 +123,7 @@ const ExpenseForm = ({ groupId, onComplete, onCancel, members = [] }) => {
                 <input
                   type="number"
                   className={styles.manualInput}
-                  placeholder="Enter manual Lent(if Any)"
+                  placeholder="Enter manual Amount(if Any)"
                   value={manualAmounts[member._id] || ""}
                   onChange={(e) =>
                     handleManualAmountChange(
