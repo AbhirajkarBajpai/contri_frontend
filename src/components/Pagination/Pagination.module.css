@@ -6,7 +6,10 @@
 }
 
 .button {
-  font-family: 'Saira';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Saira";
   height: 4vh;
   width: 8vh;
   border: 1px solid #ddd;
@@ -22,6 +25,9 @@
 }
 
 .pageButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 4vh;
   width: 3.8vh;
   border: 1px solid #ddd;
@@ -29,7 +35,7 @@
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.3s;
-  font-family: 'Saira';
+  font-family: "Saira";
 }
 
 .pageButton:hover:not(.active):not(:disabled) {
@@ -40,7 +46,7 @@
   background-color: #007bff;
   color: #fff;
   border-color: #007bff;
-  font-family: 'Saira';
+  font-family: "Saira";
 }
 
 @media (max-width: 500px) {
@@ -51,7 +57,7 @@
     height: 3vh;
     width: 3vh;
   }
-  .button{
+  .button {
     display: flex;
     align-items: center;
     justify-content: center;
