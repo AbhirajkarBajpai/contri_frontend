@@ -21,6 +21,7 @@
   min-width: 300px;
   text-align: left;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Saira SemiCondense Medium';
 }
 .overlay_content h3{
   color: aqua;
