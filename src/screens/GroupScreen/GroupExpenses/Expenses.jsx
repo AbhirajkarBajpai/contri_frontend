@@ -30,7 +30,7 @@ const Expenses = () => {
   const getGroup = async (groupId) => {
     try {
       const response = await fetch(
-        `https://contri-backend2.vercel.app/api/v1/group/groupDetail/${groupId}/${currentPage}`,
+        `https://contri-backend.vercel.app/api/v1/group/groupDetail/${groupId}/${currentPage}`,
         {
           method: "GET",
           headers: {
@@ -88,7 +88,7 @@ const Expenses = () => {
     if (loggedInUser === recUID) return handleSplitResolve(body);
     try {
       const response = await fetch(
-        "https://contri-backend2.vercel.app/api/v1/expense/reqSettel",
+        "https://contri-backend.vercel.app/api/v1/expense/reqSettel",
         {
           method: "POST",
           headers: {
@@ -116,7 +116,7 @@ const Expenses = () => {
   async function handleSplitResolve(body) {
     try {
       const response = await fetch(
-        "https://contri-backend2.vercel.app/api/v1/expense/settel",
+        "https://contri-backend.vercel.app/api/v1/expense/settel",
         {
           method: "POST",
           headers: {
@@ -144,7 +144,7 @@ const Expenses = () => {
   async function handleDeleteExpense(id) {
     try {
       const response = await fetch(
-        `https://contri-backend2.vercel.app/api/v1/expense/delExpense/${id}`,
+        `https://contri-backend.vercel.app/api/v1/expense/delExpense/${id}`,
         {
           method: "POST",
           headers: {
