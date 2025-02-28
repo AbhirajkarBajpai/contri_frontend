@@ -20,7 +20,7 @@ const Groups = () => {
 
   async function fetchData() {
     const response = await fetch(
-      "https://contri-backend.vercel.app/api/v1/user/getUserGroups",
+      "https://contri-backend2.vercel.app//api/v1/user/getUserGroups",
       {
         method: "GET",
         headers: {
@@ -49,7 +49,7 @@ const Groups = () => {
 
   async function deleteGroup(groupId) {
     const response = await fetch(
-      `https://contri-backend.vercel.app/api/v1/group/deleteGroup/${groupId}`,
+      `https://contri-backend2.vercel.app//api/v1/group/deleteGroup/${groupId}`,
       {
         method: "POST",
         headers: {
