@@ -20,7 +20,7 @@ function App() {
     const verifyUser = async () => {
       try {
         const response = await fetch(
-          "https://contri-backend2.vercel.app//api/v1/user/isUserLoggedIn",
+          "https://contri-backend2.vercel.app/api/v1/user/isUserLoggedIn",
           {
             method: "GET",
             credentials: "include",

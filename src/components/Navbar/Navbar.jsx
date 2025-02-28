@@ -14,7 +14,7 @@ function Navbar({ active, setActive }) {
 
   const logoutHandler = async () => {
     try {
-      const response = await fetch("https://contri-backend2.vercel.app//api/v1/user/logout", {
+      const response = await fetch("https://contri-backend2.vercel.app/api/v1/user/logout", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

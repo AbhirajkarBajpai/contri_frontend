@@ -15,7 +15,7 @@ const ExpenseInfo = ({ onClose, expenseId, userMap }) => {
   async function fetchExpenseData(expenseId) {
     try {
       const response = await fetch(
-        `https://contri-backend2.vercel.app//api/v1/expense/getExpense/${expenseId}`,
+        `https://contri-backend2.vercel.app/api/v1/expense/getExpense/${expenseId}`,
         {
           method: "GET",
           headers: {
