@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./ExpenseForm.module.css";
 import { useSelector } from "react-redux";
 import { showAlert } from "../alert";
+import { getAuthHeaders } from "../../utils/apih";
 
 const ExpenseForm = ({ groupId, onComplete, onCancel, members = [] }) => {
   const isUserLoggedIn = useSelector((state) => state.loggedInUser.value);
@@ -66,7 +67,8 @@ const ExpenseForm = ({ groupId, onComplete, onCancel, members = [] }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(body),
-          credentials: "include",
+          // credentials: "include",
+          headers: getAuthHeaders(),
         }
       );
       if (!response.ok) {

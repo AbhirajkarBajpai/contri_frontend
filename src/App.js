@@ -9,6 +9,7 @@ import SignupScreen from "./screens/SignupScreen/Signup";
 import LoginScreen from "./screens/LoginScreen/Login";
 import Main from "./mainPage";
 import Expenses from "./screens/GroupScreen/GroupExpenses/Expenses";
+import { getAuthHeaders } from "./utils/apih";
 
 function App() {
   const isUserLoggedIn = useSelector((state) => state.loggedInUser.value);
@@ -23,7 +24,8 @@ function App() {
           "https://contri-backend.vercel.app/api/v1/user/isUserLoggedIn",
           {
             method: "GET",
-            credentials: "include",
+            // credentials: "include",
+            headers: getAuthHeaders(),
           }
         );
         const data = await response.json();
@@ -33,7 +35,7 @@ function App() {
           dispatch(setGroups(data.user.groups));
           console.log(data);
         }
-        if (response.status === 400) {
+        if (response.status === 401) {
           setIsLoadingUser(false);
         }
       } catch (error) {

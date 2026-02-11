@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./Navbar.module.css";
 import { useNavigate } from "react-router-dom";
 import ConfirmationBox from "../ConfirmationBox/ConfirmationBox";
+import { getAuthHeaders } from "../../utils/apih";
 
 function Navbar({ active, setActive }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -20,10 +21,12 @@ function Navbar({ active, setActive }) {
           "Content-Type": "application/json",
         },
         credentials: "include",
+        headers: getAuthHeaders(),
       });
 
       if (response.ok) {
         const data = await response.json();
+        localStorage.removeItem("token");
         console.log("login successful:", data);
         navigate("/login");
       } else {

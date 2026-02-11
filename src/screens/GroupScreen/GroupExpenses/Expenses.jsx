@@ -9,6 +9,7 @@ import ExpenseInfo from "../../../components/ExpenseInfo/ExpenseInfo";
 import ConfirmationBox from "../../../components/ConfirmationBox/ConfirmationBox";
 import { showAlert } from "../../../components/alert";
 import Pagination from "../../../components/Pagination/Pagination";
+import { getAuthHeaders } from "../../../utils/apih";
 
 const Expenses = () => {
   //   const groupData = useSelector((state) => state.groupData.groupData);
@@ -36,7 +37,8 @@ const Expenses = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include",
+          // credentials: "include",
+          headers: getAuthHeaders(),
         }
       );
       if (!response.ok) {
@@ -95,7 +97,8 @@ const Expenses = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(body),
-          credentials: "include",
+          // credentials: "include",
+          headers: getAuthHeaders(),
         }
       );
       if (!response.ok) {
@@ -123,7 +126,8 @@ const Expenses = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(body),
-          credentials: "include",
+          // credentials: "include",
+          headers: getAuthHeaders(),
         }
       );
       if (!response.ok) {
@@ -150,7 +154,8 @@ const Expenses = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include",
+          // credentials: "include",
+          headers: getAuthHeaders(),
         }
       );
       if (!response.ok) {

@@ -4,6 +4,7 @@ import { setDetails, setUser, setGroups } from "../../store/store";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { showAlert } from "../../components/alert";
+import { getAuthHeaders } from "../../utils/apih";
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -21,11 +22,13 @@ const LoginScreen = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-        credentials: "include",
+        // credentials: "include",
+        headers: getAuthHeaders(),
       });
   
       if (response.ok) {
         const data = await response.json();
+        localStorage.setItem("token", data.token);
         console.log("login successful:", data);
         dispatch(setUser(data.data.user._id));
         dispatch(setGroups(data.data.user.groups));

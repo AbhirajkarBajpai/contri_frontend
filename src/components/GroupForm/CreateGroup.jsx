@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./CreateGroup.css";
 import { showAlert } from "../alert";
+import { getAuthHeaders } from "../../utils/apih";
 
 function CreateGroup(props) {
   const [enteredName, setEnteredName] = useState("");
@@ -50,7 +51,8 @@ function CreateGroup(props) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(grpData),
-          credentials: "include",
+          // credentials: "include",
+          headers: getAuthHeaders(),
         }
       );
       const data = await response.json();

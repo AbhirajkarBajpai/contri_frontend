@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUser, setDetails, setGroups } from "../../store/store";
 import { showAlert } from "../../components/alert";
+import { getAuthHeaders } from "../../utils/apih";
 
 const SignupScreen = () => {
   const dispatch = useDispatch();
@@ -33,11 +34,13 @@ const SignupScreen = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(userData),
-        credentials: "include",
+        // credentials: "include",
+        headers: getAuthHeaders(),
       });
 
       if (response.ok) {
         const data = await response.json();
+        localStorage.setItem("token", data.token);
         console.log("Signup successful:", data);
         dispatch(setUser(data.data.user._id));
         dispatch(setGroups(data.data.user.groups));

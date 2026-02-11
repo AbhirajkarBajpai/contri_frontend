@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ExpenseInfo.module.css";
 import closeBtn from "../../assets/img/CloseBtn.png";
+import { getAuthHeaders } from "../../utils/apih";
 
 const ExpenseInfo = ({ onClose, expenseId, userMap }) => {
   const [expenseData, setExpenseData] = useState();
@@ -21,7 +22,8 @@ const ExpenseInfo = ({ onClose, expenseId, userMap }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include",
+          // credentials: "include",
+          headers: getAuthHeaders(),
         }
       );
       const data = await response.json();

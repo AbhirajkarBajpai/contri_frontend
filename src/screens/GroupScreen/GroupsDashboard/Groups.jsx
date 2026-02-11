@@ -7,6 +7,7 @@ import { setGroups, setGroupData } from "../../../store/store";
 import { useNavigate } from "react-router-dom";
 import ConfirmationBox from "../../../components/ConfirmationBox/ConfirmationBox";
 import { showAlert } from "../../../components/alert";
+import { getAuthHeaders } from "../../../utils/apih";
 
 const Groups = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,8 @@ const Groups = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
+        // credentials: "include",
+        headers: getAuthHeaders(),
       }
     );
     const data = await response.json();
@@ -55,7 +57,8 @@ const Groups = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
+        // credentials: "include",
+        headers: getAuthHeaders(),
       }
     );
     const data = await response.json();
