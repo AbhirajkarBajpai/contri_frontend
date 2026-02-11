@@ -24,10 +24,6 @@ const Groups = () => {
       "https://contri-backend.vercel.app/api/v1/user/getUserGroups",
       {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // credentials: "include",
         headers: getAuthHeaders(),
       }
     );
@@ -54,10 +50,6 @@ const Groups = () => {
       `https://contri-backend.vercel.app/api/v1/group/deleteGroup/${groupId}`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // credentials: "include",
         headers: getAuthHeaders(),
       }
     );

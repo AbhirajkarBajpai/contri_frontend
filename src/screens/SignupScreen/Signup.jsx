@@ -30,11 +30,7 @@ const SignupScreen = () => {
     try {
       const response = await fetch("https://contri-backend.vercel.app/api/v1/user/signup", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify(userData),
-        // credentials: "include",
         headers: getAuthHeaders(),
       });
 

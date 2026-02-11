@@ -34,10 +34,6 @@ const Expenses = () => {
         `https://contri-backend.vercel.app/api/v1/group/groupDetail/${groupId}/${currentPage}`,
         {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          // credentials: "include",
           headers: getAuthHeaders(),
         }
       );
@@ -93,11 +89,7 @@ const Expenses = () => {
         "https://contri-backend.vercel.app/api/v1/expense/reqSettel",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
           body: JSON.stringify(body),
-          // credentials: "include",
           headers: getAuthHeaders(),
         }
       );
@@ -122,11 +114,7 @@ const Expenses = () => {
         "https://contri-backend.vercel.app/api/v1/expense/settel",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
           body: JSON.stringify(body),
-          // credentials: "include",
           headers: getAuthHeaders(),
         }
       );
@@ -151,10 +139,6 @@ const Expenses = () => {
         `https://contri-backend.vercel.app/api/v1/expense/delExpense/${id}`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          // credentials: "include",
           headers: getAuthHeaders(),
         }
       );

@@ -17,10 +17,6 @@ function Navbar({ active, setActive }) {
     try {
       const response = await fetch("https://contri-backend.vercel.app/api/v1/user/logout", {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
         headers: getAuthHeaders(),
       });
 

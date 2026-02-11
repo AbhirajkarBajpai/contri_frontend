@@ -19,10 +19,6 @@ const ExpenseInfo = ({ onClose, expenseId, userMap }) => {
         `https://contri-backend.vercel.app/api/v1/expense/getExpense/${expenseId}`,
         {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          // credentials: "include",
           headers: getAuthHeaders(),
         }
       );

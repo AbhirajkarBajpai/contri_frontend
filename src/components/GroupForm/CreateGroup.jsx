@@ -47,11 +47,7 @@ function CreateGroup(props) {
         "https://contri-backend.vercel.app/api/v1/group/createGroup",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
           body: JSON.stringify(grpData),
-          // credentials: "include",
           headers: getAuthHeaders(),
         }
       );

@@ -24,7 +24,6 @@ function App() {
           "https://contri-backend.vercel.app/api/v1/user/isUserLoggedIn",
           {
             method: "GET",
-            // credentials: "include",
             headers: getAuthHeaders(),
           }
         );
